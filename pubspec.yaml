@@ -1,0 +1,49 @@
+name: food_ninja
+description: "A new Flutter project."
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.5.1
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.8
+  flutter_localization: ^0.2.2
+  flutter_screenutil: ^5.9.3
+  flutter_bloc: ^8.1.6
+  equatable: ^2.0.5
+  freezed_annotation: ^2.4.4
+  json_annotation: ^4.9.0
+  go_router: ^14.2.7
+  flutter_svg: ^2.0.10+1
+  get_it: ^7.7.0
+  connectivity_plus: ^6.0.5
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^4.0.0
+  build_runner: ^2.4.12
+  freezed: ^2.5.7
+  json_serializable: ^6.8.0
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/images/
+
+  fonts:
+    - family: BentonSans
+      fonts:
+        - asset: assets/fonts/BentonSans Bold.otf
+          weight: 700
+        - asset: assets/fonts/BentonSans Book.otf
+          weight: 300
+        - asset: assets/fonts/BentonSans Medium.otf
+          weight: 500
