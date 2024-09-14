@@ -49,7 +49,7 @@ class _SplashScreenState extends State<SplashScreen>
       const Duration(seconds: 3),
       () {
         if (context.mounted) {
-          context.pushReplacement(onboarding);
+          context.pushReplacement(auth);
         }
       },
     );
