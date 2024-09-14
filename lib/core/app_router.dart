@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food_ninja/features/home/presentation/home_screen.dart';
 import 'package:food_ninja/features/onboarding/presentation/onboarding_screen.dart';
 import 'package:food_ninja/features/splash/presentation/splash_screen.dart';
 import 'package:go_router/go_router.dart';
@@ -6,8 +7,8 @@ import 'package:go_router/go_router.dart';
 const splash = "/";
 const home = "/home";
 const onboarding = "/onboarding";
-const login = "/login";
-const signup = "/signup";
+const login = "login";
+const signup = "signup";
 const auth = "/auth";
 
 class AppRouter {
@@ -22,7 +23,25 @@ class AppRouter {
       GoRoute(
         path: onboarding,
         builder: (context, state) => const OnboardingScreen(),
-      )
+      ),
+      GoRoute(
+        path: home,
+        builder: (context, state) => const HomeScreen(),
+      ),
+      GoRoute(
+        path: auth,
+        redirect: (context, state) => "$auth/$login",
+        routes: [
+          GoRoute(
+            path: login,
+            builder: (context, state) => const Placeholder(),
+          ),
+          GoRoute(
+            path: signup,
+            builder: (context, state) => const Placeholder(),
+          ),
+        ],
+      ),
     ],
     errorBuilder: (context, state) {
       return _errorRoute();

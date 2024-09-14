@@ -49,7 +49,7 @@ class _SplashScreenState extends State<SplashScreen>
       const Duration(seconds: 3),
       () {
         if (context.mounted) {
-          context.pushReplacement(onboarding);
+          context.pushReplacement(home);
         }
       },
     );
@@ -57,7 +57,6 @@ class _SplashScreenState extends State<SplashScreen>
 
   @override
   void dispose() {
-    _animationController.reverse();
     _animationController.dispose();
     super.dispose();
   }

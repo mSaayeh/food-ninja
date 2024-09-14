@@ -1,11 +1,17 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:food_ninja/core/app_router.dart';
+import 'package:food_ninja/firebase_options.dart';
 
+import '../../di/app_module.dart' as di;
 import 'main_bloc.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  di.init();
   runApp(const MyApp());
 }
 
