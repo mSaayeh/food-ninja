@@ -1,12 +1,16 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-class Promo {
+import 'package:equatable/equatable.dart';
+
+class Promotion extends Equatable {
   final String imageUrl;
   final String redirectUrl;
 
-  Promo({
+  const Promotion({
     required this.imageUrl,
     required this.redirectUrl,
   });
+
+  @override
+  List<Object?> get props => [imageUrl, redirectUrl];
 
   @override
   String toString() => 'Promo(imageUrl: $imageUrl, redirectUrl: $redirectUrl)';

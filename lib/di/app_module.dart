@@ -1,6 +1,8 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:food_ninja/core/util/network_info.dart';
-import 'package:food_ninja/features/home/data/services/promos_service.dart';
+import 'package:food_ninja/features/home/data/services/menu_service.dart';
+import 'package:food_ninja/features/home/data/services/promotions_service.dart';
+import 'package:food_ninja/features/home/data/services/restaurants_service.dart';
 import 'package:get_it/get_it.dart';
 
 final sl = GetIt.instance;
@@ -14,5 +16,7 @@ Future<void> init() async {
       () => NetworkInfoImpl(connectivity: sl()));
 
   // services
-  sl.registerLazySingleton<PromosService>(() => PromosServiceImpl());
+  sl.registerLazySingleton<PromotionsService>(() => PromotionsServiceImpl());
+  sl.registerLazySingleton<RestaurantsService>(() => RestaurantsServiceImpl());
+  sl.registerLazySingleton<MenuService>(() => MenuServiceImpl());
 }

@@ -46,4 +46,16 @@ var _textTheme = TextTheme(
     fontSize: 15.sp,
     color: const Color(0xFF09051C),
   ),
+  bodyMedium: TextStyle(
+    fontFamily: bentonSansFontFamily,
+    fontWeight: FontWeight.w500,
+    fontSize: 15.sp,
+    color: const Color(0xFF09051C),
+  ),
+  labelSmall: TextStyle(
+    fontSize: 14.sp,
+    fontFamily: bentonSansFontFamily,
+    fontWeight: FontWeight.normal,
+    color: const Color(0xFF3B3B3B),
+  ),
 );
