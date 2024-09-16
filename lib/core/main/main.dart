@@ -1,7 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:food_ninja/core/app_router.dart';
+import 'package:food_ninja/core/navigation/app_router.dart';
 import 'package:food_ninja/core/theme/theme.dart';
 import 'package:food_ninja/firebase_options.dart';
 

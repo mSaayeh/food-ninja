@@ -23,9 +23,9 @@ class RestaurantListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card.filled(
       shadowColor: const Color(0x125A6CEA),
-      color: Colors.white,
+      color: Colors.grey.shade200.withOpacity(.5),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(22.r)),
-      elevation: 20.r,
+      elevation: 100.r,
       clipBehavior: Clip.hardEdge,
       margin: EdgeInsets.all(8.r),
       child: SizedBox(

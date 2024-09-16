@@ -42,7 +42,7 @@ class Promotions extends StatelessWidget {
             : Image.network(
                 promos![index].imageUrl,
                 height: 150.h,
-                fit: BoxFit.fitHeight,
+                fit: BoxFit.fill,
               ),
         options: CarouselOptions(
           height: 150.h,

@@ -30,7 +30,7 @@ class MealListTile extends StatelessWidget {
   Widget _buildTile(BuildContext context) {
     return ListTile(
       contentPadding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 10.w),
-      tileColor: Colors.white,
+      tileColor: Colors.grey.shade200.withOpacity(.5),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(22.r)),
       leading: ClipRRect(
         borderRadius: BorderRadius.circular(10.r),

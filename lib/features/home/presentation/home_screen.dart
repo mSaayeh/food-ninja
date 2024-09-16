@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:food_ninja/core/app_router.dart';
+import 'package:food_ninja/core/navigation/app_router.dart';
 import 'package:food_ninja/core/widgets/background_widget.dart';
 import 'package:food_ninja/core/widgets/home_flow/home_header.dart';
 import 'package:food_ninja/core/widgets/home_flow/home_section.dart';
@@ -21,95 +21,90 @@ class HomeScreen extends StatelessWidget {
         ..loadPromotions()
         ..loadRestaurants()
         ..loadMenu(),
-      child: Scaffold(
-        body: BackgroundWidget(
-          child: SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 25.0),
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    const HomeHeader(),
-                    BlocBuilder<HomeCubit, HomeState>(
-                      builder: (context, state) {
-                        return Column(
-                          children: [
-                            if (state.promotionsState is PromotionsLoading)
-                              const Promotions.loading()
-                            else
-                              Promotions(
-                                promos:
-                                    (state.promotionsState as PromotionsLoaded)
-                                        .promotions,
-                              ),
-                            HomeSection(
-                              title: 'Popular Restaurants',
-                              heroTag: 'rest_title',
-                              buttonText: 'View More',
-                              navigationPath: '$home/$popularRestaurats',
-                              child: SizedBox(
-                                height: 190.h,
-                                width: double.infinity,
-                                child: ListView.builder(
-                                  shrinkWrap: true,
-                                  scrollDirection: Axis.horizontal,
-                                  itemBuilder: (context, index) {
-                                    if (state.restaurantsState
-                                        is RestaurantsLoading) {
-                                      return const RestaurantListTile.loading();
-                                    } else {
-                                      return RestaurantListTile(
-                                        restaurant: (state.restaurantsState
-                                                as RestaurantsLoaded)
-                                            .restaurants[index],
-                                        onClick: () {},
-                                      );
-                                    }
-                                  },
-                                  itemCount: state.restaurantsState
-                                          is RestaurantsLoading
+      child: BackgroundWidget(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 25.0),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                SizedBox(height: 40.h),
+                const HomeHeader(),
+                BlocBuilder<HomeCubit, HomeState>(
+                  builder: (context, state) {
+                    return Column(
+                      children: [
+                        if (state.promotionsState is PromotionsLoading)
+                          const Promotions.loading()
+                        else
+                          Promotions(
+                            promos: (state.promotionsState as PromotionsLoaded)
+                                .promotions,
+                          ),
+                        HomeSection(
+                          title: 'Popular Restaurants',
+                          heroTag: 'rest_title',
+                          buttonText: 'View More',
+                          navigationPath: '$home/$popularRestaurats',
+                          child: SizedBox(
+                            height: 190.h,
+                            width: double.infinity,
+                            child: ListView.builder(
+                              shrinkWrap: true,
+                              scrollDirection: Axis.horizontal,
+                              itemBuilder: (context, index) {
+                                if (state.restaurantsState
+                                    is RestaurantsLoading) {
+                                  return const RestaurantListTile.loading();
+                                } else {
+                                  return RestaurantListTile(
+                                    restaurant: (state.restaurantsState
+                                            as RestaurantsLoaded)
+                                        .restaurants[index],
+                                    onClick: () {},
+                                  );
+                                }
+                              },
+                              itemCount:
+                                  state.restaurantsState is RestaurantsLoading
                                       ? 3
                                       : (state.restaurantsState
                                               as RestaurantsLoaded)
                                           .restaurants
                                           .length,
-                                ),
-                              ),
                             ),
-                            HomeSection(
-                              title: 'Popular Menu',
-                              child: ListView.separated(
-                                physics: const ClampingScrollPhysics(),
-                                padding: EdgeInsets.only(bottom: 16.h),
-                                shrinkWrap: true,
-                                itemBuilder: (context, index) {
-                                  if (state.menuState is MenuLoading) {
-                                    return const MealListTile.loading();
-                                  } else {
-                                    return MealListTile(
-                                      meal: (state.menuState as MenuLoaded)
-                                          .meals[index],
-                                      onClick: () {},
-                                    );
-                                  }
-                                },
-                                itemCount: state.menuState is MenuLoading
-                                    ? 3
-                                    : (state.menuState as MenuLoaded)
-                                        .meals
-                                        .length,
-                                separatorBuilder:
-                                    (BuildContext context, int index) =>
-                                        SizedBox(height: 20.h),
-                              ),
-                            )
-                          ],
-                        );
-                      },
-                    ),
-                  ],
+                          ),
+                        ),
+                        HomeSection(
+                          title: 'Popular Menu',
+                          child: ListView.separated(
+                            physics: const ClampingScrollPhysics(),
+                            padding: EdgeInsets.only(bottom: 16.h),
+                            shrinkWrap: true,
+                            itemBuilder: (context, index) {
+                              if (state.menuState is MenuLoading) {
+                                return const MealListTile.loading();
+                              } else {
+                                return MealListTile(
+                                  meal: (state.menuState as MenuLoaded)
+                                      .meals[index],
+                                  onClick: () {},
+                                );
+                              }
+                            },
+                            itemCount: state.menuState is MenuLoading
+                                ? 3
+                                : (state.menuState as MenuLoaded).meals.length,
+                            separatorBuilder:
+                                (BuildContext context, int index) =>
+                                    SizedBox(height: 10.h),
+                          ),
+                        ),
+                        SizedBox(height: 70.h)
+                      ],
+                    );
+                  },
                 ),
-              ),
+              ],
             ),
           ),
         ),

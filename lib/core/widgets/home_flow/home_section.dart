@@ -9,7 +9,7 @@ class HomeSection extends StatelessWidget {
   final String? buttonText;
   final Widget child;
   final String? heroTag;
-  
+
   const HomeSection({
     super.key,
     required this.title,
@@ -44,7 +44,7 @@ class HomeSection extends StatelessWidget {
                 InkWell(
                   onTap: navigationPath == null
                       ? null
-                      : () => context.go(navigationPath!),
+                      : () => context.push(navigationPath!),
                   child: Text(
                     buttonText!,
                     style: Theme.of(context)
