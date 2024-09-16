@@ -8,12 +8,15 @@ class HomeSection extends StatelessWidget {
   final String? navigationPath;
   final String? buttonText;
   final Widget child;
+  final String? heroTag;
+  
   const HomeSection({
     super.key,
     required this.title,
     this.navigationPath,
     this.buttonText,
     required this.child,
+    this.heroTag,
   });
 
   @override
@@ -25,15 +28,23 @@ class HomeSection extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                title,
-                style: Theme.of(context).textTheme.titleMedium,
-              ),
+              heroTag == null
+                  ? Text(
+                      title,
+                      style: Theme.of(context).textTheme.titleMedium,
+                    )
+                  : Hero(
+                      tag: heroTag!,
+                      child: Text(
+                        title,
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
+                    ),
               if (buttonText != null)
                 InkWell(
                   onTap: navigationPath == null
                       ? null
-                      : () => context.push(navigationPath!),
+                      : () => context.go(navigationPath!),
                   child: Text(
                     buttonText!,
                     style: Theme.of(context)

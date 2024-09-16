@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:food_ninja/core/widgets/double_fall_back_image.dart';
 import 'package:food_ninja/features/home/data/models/restaurant.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -20,26 +21,28 @@ class RestaurantListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 184.h,
-      width: 147.w,
-      child: Card.filled(
-        shadowColor: const Color(0x125A6CEA),
-        color: Colors.white,
-        shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(22.r)),
-        elevation: 20.r,
-        clipBehavior: Clip.hardEdge,
-        margin: EdgeInsets.all(8.r),
+    return Card.filled(
+      shadowColor: const Color(0x125A6CEA),
+      color: Colors.white,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(22.r)),
+      elevation: 20.r,
+      clipBehavior: Clip.hardEdge,
+      margin: EdgeInsets.all(8.r),
+      child: SizedBox(
+        height: 184.h,
+        width: 147.w,
         child: restaurant != null
             ? InkWell(
                 onTap: onClick,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    restaurant!.imageUrl != null
-                        ? Image.network(restaurant!.imageUrl!)
-                        : Image.asset('assets/images/Logo.png'),
+                    DoubleFallBackImage(
+                      mainNetworkImage: restaurant!.imageUrl,
+                      fallBackLocalImage: 'assets/images/Logo.png',
+                      size: 70,
+                      boxFit: BoxFit.contain,
+                    ),
                     SizedBox(height: 16.h),
                     Text(
                       restaurant!.name,
@@ -56,7 +59,7 @@ class RestaurantListTile extends StatelessWidget {
                 ),
               )
             : Shimmer.fromColors(
-                period: Duration(seconds: 3),
+                period: const Duration(seconds: 3),
                 baseColor: Colors.grey.shade700,
                 highlightColor: Colors.grey.shade300,
                 child: Column(

@@ -25,6 +25,7 @@ class Promotions extends StatelessWidget {
       child: CarouselSlider.builder(
         itemBuilder: (context, index, realIndex) => promos?[index] == null
             ? Shimmer.fromColors(
+                period: const Duration(seconds: 3),
                 baseColor: gradientDarkGreen,
                 highlightColor: gradientLightGreen,
                 direction: ShimmerDirection.ltr,

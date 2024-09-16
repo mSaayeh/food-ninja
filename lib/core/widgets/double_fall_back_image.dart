@@ -27,6 +27,7 @@ class DoubleFallBackImage extends StatelessWidget {
       height: size?.h,
       width: size?.w,
       fit: boxFit,
+      alignment: Alignment.center,
       errorBuilder: (context, error, stackTrace) {
         return Image.asset(
           fallBackLocalImage,

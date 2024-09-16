@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:food_ninja/core/theme/theme.dart';
 import 'package:food_ninja/core/widgets/double_fall_back_image.dart';
+import 'package:food_ninja/core/widgets/shimmer_placeholder.dart';
 import 'package:food_ninja/features/home/data/models/meal.dart';
+import 'package:shimmer/shimmer.dart';
 
 class MealListTile extends StatelessWidget {
   final Meal? meal;
@@ -15,6 +17,17 @@ class MealListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return meal != null
+        ? _buildTile(context)
+        : Shimmer.fromColors(
+            period: const Duration(seconds: 3),
+            baseColor: Colors.grey.shade700,
+            highlightColor: Colors.grey.shade300,
+            child: _buildTile(context),
+          );
+  }
+
+  Widget _buildTile(BuildContext context) {
     return ListTile(
       contentPadding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 10.w),
       tileColor: Colors.white,
@@ -22,31 +35,39 @@ class MealListTile extends StatelessWidget {
       leading: ClipRRect(
         borderRadius: BorderRadius.circular(10.r),
         clipBehavior: Clip.hardEdge,
-        child: DoubleFallBackImage(
-          mainNetworkImage: meal!.imageUrl,
-          fallBackNetowrkImage: meal!.restaurant.imageUrl,
-          fallBackLocalImage: 'assets/images/Logo.png',
-          size: 64,
-        ),
+        child: meal != null
+            ? DoubleFallBackImage(
+                mainNetworkImage: meal!.imageUrl,
+                fallBackNetowrkImage: meal!.restaurant.imageUrl,
+                fallBackLocalImage: 'assets/images/Logo.png',
+                size: 64,
+              )
+            : const ShimmerPlaceholder(width: 64, height: 64),
       ),
-      trailing: Text(
-        "\$${meal!.price}",
-        style: TextStyle(
-          fontSize: 15.sp,
-          fontFamily: bentonSansFontFamily,
-          fontWeight: FontWeight.bold,
-          color: lightOrange,
-        ),
-      ),
+      trailing: meal != null
+          ? Text(
+              "\$${meal!.price}",
+              style: TextStyle(
+                fontSize: 15.sp,
+                fontFamily: bentonSansFontFamily,
+                fontWeight: FontWeight.bold,
+                color: lightOrange,
+              ),
+            )
+          : const ShimmerPlaceholder(width: 12, height: 8),
       onTap: onClick,
-      title: Text(
-        meal!.name,
-        style: Theme.of(context).textTheme.bodyMedium,
-      ),
-      subtitle: Text(
-        meal!.restaurant.name,
-        style: Theme.of(context).textTheme.labelSmall,
-      ),
+      title: meal != null
+          ? Text(
+              meal!.name,
+              style: Theme.of(context).textTheme.bodyMedium,
+            )
+          : const ShimmerPlaceholder(width: 12, height: 8),
+      subtitle: meal != null
+          ? Text(
+              meal!.restaurant.name,
+              style: Theme.of(context).textTheme.labelSmall,
+            )
+          : const ShimmerPlaceholder(width: 12, height: 8),
     );
   }
 }

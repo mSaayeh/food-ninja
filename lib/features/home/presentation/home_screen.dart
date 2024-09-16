@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:food_ninja/core/widgets/app_header.dart';
+import 'package:food_ninja/core/app_router.dart';
 import 'package:food_ninja/core/widgets/background_widget.dart';
-import 'package:food_ninja/core/widgets/filter_button.dart';
-import 'package:food_ninja/core/widgets/food_search_bar.dart';
+import 'package:food_ninja/core/widgets/home_flow/home_header.dart';
+import 'package:food_ninja/core/widgets/home_flow/home_section.dart';
 import 'package:food_ninja/core/widgets/meal_list_tile.dart';
 import 'package:food_ninja/core/widgets/restaurant_list_tile.dart';
 import 'package:food_ninja/di/app_module.dart';
 import 'package:food_ninja/features/home/presentation/cubit/home_cubit.dart';
-import 'package:food_ninja/features/home/presentation/widgets/home_section.dart';
 import 'package:food_ninja/features/home/presentation/widgets/promotions.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -30,20 +29,7 @@ class HomeScreen extends StatelessWidget {
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    SizedBox(height: 60.h),
-                    const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 8.0),
-                      child: AppHeader(),
-                    ),
-                    SizedBox(height: 18.h),
-                    Row(
-                      children: [
-                        const Expanded(child: FoodSearchBar()),
-                        SizedBox(width: 8.w),
-                        const FilterButton(),
-                      ],
-                    ),
-                    SizedBox(height: 20.h),
+                    const HomeHeader(),
                     BlocBuilder<HomeCubit, HomeState>(
                       builder: (context, state) {
                         return Column(
@@ -57,8 +43,10 @@ class HomeScreen extends StatelessWidget {
                                         .promotions,
                               ),
                             HomeSection(
-                              title: 'Nearest Restaurant',
+                              title: 'Popular Restaurants',
+                              heroTag: 'rest_title',
                               buttonText: 'View More',
+                              navigationPath: '$home/$popularRestaurats',
                               child: SizedBox(
                                 height: 190.h,
                                 width: double.infinity,
@@ -90,8 +78,9 @@ class HomeScreen extends StatelessWidget {
                             ),
                             HomeSection(
                               title: 'Popular Menu',
-                              buttonText: 'View More',
-                              child: ListView.builder(
+                              child: ListView.separated(
+                                physics: const ClampingScrollPhysics(),
+                                padding: EdgeInsets.only(bottom: 16.h),
                                 shrinkWrap: true,
                                 itemBuilder: (context, index) {
                                   if (state.menuState is MenuLoading) {
@@ -109,6 +98,9 @@ class HomeScreen extends StatelessWidget {
                                     : (state.menuState as MenuLoaded)
                                         .meals
                                         .length,
+                                separatorBuilder:
+                                    (BuildContext context, int index) =>
+                                        SizedBox(height: 20.h),
                               ),
                             )
                           ],

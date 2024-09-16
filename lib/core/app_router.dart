@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:food_ninja/features/home/presentation/home_screen.dart';
 import 'package:food_ninja/features/onboarding/presentation/onboarding_screen.dart';
+import 'package:food_ninja/features/popular_restaurants/presentation/popular_restaurants_screen.dart';
 import 'package:food_ninja/features/splash/presentation/splash_screen.dart';
 import 'package:go_router/go_router.dart';
 
@@ -10,6 +11,8 @@ const onboarding = "/onboarding";
 const login = "login";
 const signup = "signup";
 const auth = "/auth";
+const popularRestaurats = 'popular_restaurants';
+const popularMeals = 'popular_meals';
 
 class AppRouter {
   const AppRouter._();
@@ -27,6 +30,16 @@ class AppRouter {
       GoRoute(
         path: home,
         builder: (context, state) => const HomeScreen(),
+        routes: [
+          GoRoute(
+            path: popularRestaurats,
+            builder: (context, state) => const PopularRestaurantsScreen(),
+          ),
+          GoRoute(
+            path: popularMeals,
+            builder: (context, state) => const Placeholder(),
+          ),
+        ],
       ),
       GoRoute(
         path: auth,

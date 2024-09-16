@@ -7,28 +7,31 @@ class AppHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(
-          'Find Your\nFavorite Food',
-          style: Theme.of(context).textTheme.headlineLarge,
-        ),
-        IconButton(
-          style: IconButton.styleFrom(
-            backgroundColor: Colors.white,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15.r),
-            ),
-            foregroundColor: gradientDarkGreen,
-            elevation: 2,
-            padding: EdgeInsets.all(10.w),
+    return Hero(
+      tag: 'app_header',
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            'Find Your\nFavorite Food',
+            style: Theme.of(context).textTheme.headlineLarge,
           ),
-          iconSize: 25.w,
-          onPressed: () {},
-          icon: const Icon(Icons.notifications_outlined),
-        ),
-      ],
+          IconButton(
+            style: IconButton.styleFrom(
+              backgroundColor: Colors.white,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15.r),
+              ),
+              foregroundColor: gradientDarkGreen,
+              elevation: 2,
+              padding: EdgeInsets.all(10.w),
+            ),
+            iconSize: 25.w,
+            onPressed: () {},
+            icon: const Icon(Icons.notifications_outlined),
+          ),
+        ],
+      ),
     );
   }
 }
