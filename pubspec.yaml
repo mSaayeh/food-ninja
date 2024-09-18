@@ -23,6 +23,7 @@ dependencies:
   connectivity_plus: ^6.0.5
   firebase_core: ^3.4.1
   firebase_auth: ^5.2.1
+  cloud_firestore:
   google_sign_in:
 
 dev_dependencies:
@@ -39,6 +40,7 @@ flutter:
 
   assets:
     - assets/images/
+    - assets/icons/
 
   fonts:
     - family: BentonSans
@@ -49,3 +51,5 @@ flutter:
           weight: 300
         - asset: assets/fonts/BentonSans Medium.otf
           weight: 500
+        - asset: assets/fonts/BentonSans Regular.otf
+          weight: 400

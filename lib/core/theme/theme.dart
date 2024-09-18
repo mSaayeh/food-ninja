@@ -7,6 +7,11 @@ part 'typo.dart';
 final ThemeData lightTheme = ThemeData(
   filledButtonTheme: _filledButtonThemeData,
   textTheme: _textTheme,
+  colorScheme: ColorScheme.fromSwatch().copyWith(
+    primary: gradientDarkGreen,
+    secondary: gradientLightGreen,
+    brightness: Brightness.light,
+  ),
 );
 
 final buttonBorderRadius = BorderRadius.circular(15);
