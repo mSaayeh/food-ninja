@@ -10,6 +10,7 @@ class AuthTextFormField extends StatefulWidget {
     required this.isPassword,
     required this.validator,
     required this.onSave,
+    //required this.validateMode,
     this.textCapitalization = TextCapitalization.none,
     this.keyboardType,
   });
@@ -17,6 +18,8 @@ class AuthTextFormField extends StatefulWidget {
   final String label;
   final Widget icon;
   final bool isPassword;
+
+  //final bool validateMode;
   final TextInputType? keyboardType;
   final TextCapitalization textCapitalization;
   final void Function(String?) onSave;

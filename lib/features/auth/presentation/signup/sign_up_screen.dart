@@ -146,6 +146,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     onPressed: _onCreatedAccountClicked,
                     child: const Text('Create Account'),
                   ),
+                  const SizedBox(height: 16),
                   TextButton(
                     onPressed: () {
                       context.go(login);
