@@ -63,13 +63,12 @@ class _LoginScreenState extends State<LoginScreen> {
     return null;
   }
 
-  void _onGoogleSignInClicked() {
-    Future.wait([loginWithGoogle()], cleanUp: (cred) {
-      log('Login Succeeded with user ${_firebaseAuth.currentUser}');
-      if (context.mounted) {
-        context.go(home);
-      }
-    });
+  void _onGoogleSignInClicked() async {
+    await loginWithGoogle();
+    log('Login Succeeded with user ${_firebaseAuth.currentUser}');
+    if (context.mounted) {
+      context.go(home);
+    }
   }
 
   @override
