@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:food_ninja/core/navigation/main_navigation_screen.dart';
+import 'package:food_ninja/features/auth/presentation/login/login_screen.dart';
+import 'package:food_ninja/features/auth/presentation/signup/sign_up_screen.dart';
+import 'package:food_ninja/features/auth/presentation/signup/sign_up_success_screen.dart';
 import 'package:food_ninja/features/home/presentation/home_screen.dart';
 import 'package:food_ninja/features/onboarding/presentation/onboarding_screen.dart';
 import 'package:food_ninja/features/popular_restaurants/presentation/popular_restaurants_screen.dart';
@@ -9,9 +12,10 @@ import 'package:go_router/go_router.dart';
 const splash = "/";
 const home = "/home";
 const onboarding = "/onboarding";
-const login = "login";
-const signup = "signup";
 const auth = "/auth";
+const login = "/login";
+const signup = "/signup";
+const signupSuccess = "/signupSuccess";
 const popularRestaurats = 'popular_restaurants';
 const popularMeals = 'popular_meals';
 const mainNavigationScreen = '/main_nav';
@@ -47,20 +51,18 @@ class AppRouter {
           ),
         ],
       ),
-      GoRoute(
-        path: auth,
-        redirect: (context, state) => "$auth/$login",
-        routes: [
-          GoRoute(
-            path: login,
-            builder: (context, state) => const Placeholder(),
-          ),
-          GoRoute(
-            path: signup,
-            builder: (context, state) => const Placeholder(),
-          ),
-        ],
+            GoRoute(
+        path: login,
+        builder: (context, state) => const LoginScreen(),
       ),
+      GoRoute(
+        path: signup,
+        builder: (context, state) => const SignUpScreen(),
+      ),
+      GoRoute(
+        path: signupSuccess,
+        builder: (context, state) => const SignUpSuccessScreen(),
+      )
     ],
     errorBuilder: (context, state) {
       return _errorRoute();

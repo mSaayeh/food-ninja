@@ -50,12 +50,24 @@ var _textTheme = TextTheme(
     fontFamily: bentonSansFontFamily,
     fontWeight: FontWeight.w500,
     fontSize: 15.sp,
+  ),
+  titleLarge: TextStyle(
+    fontSize: 20.sp,
+    fontFamily: bentonSansFontFamily,
+    fontWeight: FontWeight.w700,
     color: const Color(0xFF09051C),
   ),
   labelSmall: TextStyle(
     fontSize: 14.sp,
     fontFamily: bentonSansFontFamily,
-    fontWeight: FontWeight.normal,
-    color: const Color(0xFF3B3B3B),
+    fontWeight: FontWeight.w400,
+    color: const Color(0xFF737373),
+    letterSpacing: 0.5.sp,
+  ),
+  titleSmall: TextStyle(
+    fontSize: 20.sp,
+    fontFamily: bentonSansFontFamily,
+    fontWeight: FontWeight.w400,
+    color: const Color(0xFF09051C),
   ),
 );

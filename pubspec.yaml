@@ -20,13 +20,15 @@ dependencies:
   get_it: ^7.7.0
   connectivity_plus: ^6.0.5
   google_fonts: ^6.2.1
-  firebase_core: ^3.4.1
   firebase_storage: ^12.3.0
   cloud_firestore: ^5.4.1
   shimmer: ^3.0.0
   carousel_slider: ^5.0.0
   flutter_rating_bar: ^4.0.1
   persistent_bottom_nav_bar_v2: ^5.3.0
+  firebase_core: ^3.4.1
+  firebase_auth: ^5.2.1
+  google_sign_in: ^6.2.1
 
 dev_dependencies:
   flutter_test:
@@ -39,6 +41,7 @@ flutter:
 
   assets:
     - assets/images/
+    - assets/icons/
 
   fonts:
     - family: BentonSans
@@ -49,3 +52,5 @@ flutter:
           weight: 300
         - asset: assets/fonts/BentonSans Medium.otf
           weight: 500
+        - asset: assets/fonts/BentonSans Regular.otf
+          weight: 400
