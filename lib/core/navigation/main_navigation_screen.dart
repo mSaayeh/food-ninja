@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:food_ninja/core/theme/theme.dart';
+import 'package:food_ninja/features/cart/presentation/cart_screen.dart';
 import 'package:food_ninja/features/home/presentation/home_screen.dart';
-import 'package:food_ninja/features/onboarding/presentation/onboarding_screen.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
 
 class MainNavigationScreen extends StatelessWidget {
@@ -24,7 +24,7 @@ class MainNavigationScreen extends StatelessWidget {
           ),
         ),
         PersistentTabConfig(
-          screen: const OnboardingScreen(),
+          screen: CartScreen(),
           item: _buildNavBarItem(
             iconPath: 'assets/images/Cart.svg',
             title: 'Cart',
