@@ -5,9 +5,8 @@ import 'package:food_ninja/features/cart/presentation/widgets/gradient_text.dart
 import 'package:food_ninja/features/cart/presentation/widgets/quantity_button.dart';
 
 class ItemTile extends StatelessWidget {
-  ItemTile({super.key, required this.itemModel, required this.itemQuantity});
-  ItemModel itemModel;
-  int itemQuantity = 1;
+  const ItemTile({super.key, required this.itemModel});
+  final ItemModel itemModel;
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +14,7 @@ class ItemTile extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 25),
       child: Container(
         height: 160,
-        width: double.infinity,
+        width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(22),
           color: Colors.white,
@@ -57,18 +56,18 @@ class ItemTile extends StatelessWidget {
                     ),
                     Text(
                       itemModel.restaurantName,
-                      style: const TextStyle(
-                          color: Color(0xffC4C4C4),
+                      style: TextStyle(
+                          color: const Color(0xff3B3B3B).withOpacity(0.3),
                           fontFamily: 'BentonSans',
                           fontSize: 18,
-                          fontWeight: FontWeight.w300,
+                          fontWeight: FontWeight.w400,
                           letterSpacing: 0.5),
                     ),
                     const SizedBox(
                       height: 4,
                     ),
                     GradientText(
-                      r'$ ' '${itemModel.price.toString()}',
+                      text: r'$ ' '${itemModel.price.toString()}',
                       style: const TextStyle(
                           fontSize: 28,
                           fontFamily: 'BentonSans',
@@ -87,35 +86,29 @@ class ItemTile extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       QuantityButton(
-                        colors: const [
-                          Colors.grey,
+                        gradientColors: [
+                          gradientLightGreen.withOpacity(0.1),
+                          gradientDarkGreen.withOpacity(0.1),
                         ],
-                        onTap: () {
-                          itemQuantity--;
-                        },
-                        icon: const Icon(
-                          Icons.remove,
-                          color: Color(0xff36D482),
-                          size: 30,
-                        ),
+                        gradientShaderColors: const [
+                          gradientLightGreen,
+                          gradientDarkGreen
+                        ],
+                        icon: Icons.remove,
+                        iconColor: Colors.white,
                       ),
-                      Text(
-                        itemQuantity.toString(),
-                        style: const TextStyle(
+                      const Text(
+                        '1',
+                        style: TextStyle(
                             color: Color(0xff5D5D5D),
                             fontFamily: 'Poppins',
                             fontSize: 25),
                       ),
-                      QuantityButton(
-                        colors: const [gradientLightGreen, gradientDarkGreen],
-                        onTap: () {
-                          itemQuantity++;
-                        },
-                        icon: const Icon(
-                          Icons.add,
-                          color: Colors.white,
-                          size: 30,
-                        ),
+                      const QuantityButton(
+                        gradientColors: [gradientLightGreen, gradientDarkGreen],
+                        gradientShaderColors: [Colors.white, Colors.white],
+                        icon: Icons.add,
+                        iconColor: Colors.white,
                       ),
                     ],
                   ),

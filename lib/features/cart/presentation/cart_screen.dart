@@ -59,7 +59,6 @@ class CartScreen extends StatelessWidget {
                 itemCount: items.length,
                 itemBuilder: (BuildContext, int) {
                   return ItemTile(
-                    itemQuantity: 1,
                     itemModel: items[int],
                   );
                 },
@@ -79,15 +78,6 @@ class CartScreen extends StatelessWidget {
                 ),
                 child: Stack(
                   children: [
-                    Positioned.fill(
-                      child: Opacity(
-                        opacity: 0.2, // Adjust opacity as needed
-                        child: Image.asset(
-                          'food-ninja/assets/images/CardPattern.png', // Your pattern asset
-                          fit: BoxFit.cover, // Adjust as needed
-                        ),
-                      ),
-                    ),
                     Padding(
                       padding: const EdgeInsets.only(top: 30),
                       child: Column(
@@ -206,7 +196,7 @@ class CartScreen extends StatelessWidget {
                                 ),
                                 child: const Center(
                                   child: GradientText(
-                                    'Place My Order',
+                                    text: 'Place My Order',
                                     style: TextStyle(fontSize: 20),
                                     gradient: LinearGradient(
                                         colors: [
