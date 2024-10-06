@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food_ninja/core/theme/theme.dart';
 
 class GradientText extends StatelessWidget {
   const GradientText({
@@ -9,6 +10,21 @@ class GradientText extends StatelessWidget {
     this.fontFamily,
     this.fontWeight,
   });
+
+  const GradientText.defaultGradient({
+    super.key,
+    required this.text,
+    required this.fontSize,
+    this.fontFamily,
+    this.fontWeight,
+  }) : gradient = const LinearGradient(
+          colors: [
+            gradientLightGreen,
+            gradientDarkGreen,
+          ],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        );
 
   final String text;
   final Gradient gradient;

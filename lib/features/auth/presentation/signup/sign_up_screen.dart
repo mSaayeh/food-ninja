@@ -9,9 +9,9 @@ import 'package:food_ninja/core/navigation/app_router.dart';
 import 'package:food_ninja/core/theme/theme.dart';
 import 'package:food_ninja/core/widgets/background_widget.dart';
 import 'package:food_ninja/features/auth/data/model/user.dart';
+import 'package:food_ninja/features/auth/data/util/firestore_auth_helper.dart';
 import 'package:food_ninja/features/auth/widgets/auth_text_form_field.dart';
 import 'package:go_router/go_router.dart';
-
 
 final _firebaseAuth = FirebaseAuth.instance;
 final _fireStore = FirebaseFirestore.instance;
@@ -40,10 +40,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       final user =
           AuthedUser(id: createdUser.user!.uid, name: _name, email: _email);
       log(user.toString());
-      await _fireStore
-          .collection("users")
-          .doc(createdUser.user!.uid)
-          .set(user.toMap());
+      await FirestoreAuthHelper.createNewUser(user);
       if (context.mounted) {
         context.pushReplacement(signupSuccess);
       }

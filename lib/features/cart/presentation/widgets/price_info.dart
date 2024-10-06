@@ -1,66 +1,73 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class PriceInfo extends StatelessWidget {
-  const PriceInfo({super.key});
+  final double subtotal;
+  final double deliveryCharge;
+  final double discount;
+  final double totalPrice;
+
+  const PriceInfo({
+    super.key,
+    required this.subtotal,
+    required this.deliveryCharge,
+    required this.discount,
+    required this.totalPrice,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
+    return Column(
       children: [
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 22),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'Sub-Total',
-                style: TextStyle(
-                    color: Colors.white,
-                    fontFamily: 'BentonSans',
-                    fontWeight: FontWeight.w500,
-                    fontSize: 19),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text(
+              'Sub-Total',
+              style: TextStyle(
+                color: Colors.white,
+                fontFamily: 'BentonSans',
+                fontWeight: FontWeight.w500,
+                fontSize: 19,
               ),
-              Text(
-                '120' r' $',
-                style: TextStyle(
-                    color: Colors.white,
-                    fontFamily: 'BentonSans',
-                    fontWeight: FontWeight.w500,
-                    fontSize: 19),
+            ),
+            Text(
+              '${subtotal.toStringAsFixed(2)} \$',
+              style: const TextStyle(
+                color: Colors.white,
+                fontFamily: 'BentonSans',
+                fontWeight: FontWeight.w500,
+                fontSize: 19,
               ),
-            ],
-          ),
+            ),
+          ],
         ),
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 22),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'Delivery Charge',
-                style: TextStyle(
-                    color: Colors.white,
-                    fontFamily: 'BentonSans',
-                    fontWeight: FontWeight.w500,
-                    fontSize: 19),
-              ),
-              Text(
-                '10' r' $',
-                style: TextStyle(
-                    color: Colors.white,
-                    fontFamily: 'BentonSans',
-                    fontWeight: FontWeight.w500,
-                    fontSize: 19),
-              ),
-            ],
-          ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text(
+              'Delivery Charge',
+              style: TextStyle(
+                  color: Colors.white,
+                  fontFamily: 'BentonSans',
+                  fontWeight: FontWeight.w500,
+                  fontSize: 19),
+            ),
+            Text(
+              '${deliveryCharge.toStringAsFixed(2)} \$',
+              style: const TextStyle(
+                  color: Colors.white,
+                  fontFamily: 'BentonSans',
+                  fontWeight: FontWeight.w500,
+                  fontSize: 19),
+            ),
+          ],
         ),
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 22),
-          child: Row(
+        if (discount != 0)
+          Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
+              const Text(
                 'Discount',
                 style: TextStyle(
                     color: Colors.white,
@@ -69,8 +76,8 @@ class PriceInfo extends StatelessWidget {
                     fontSize: 19),
               ),
               Text(
-                '20' r' $',
-                style: TextStyle(
+                '${discount.toStringAsFixed(2)} \$',
+                style: const TextStyle(
                     color: Colors.white,
                     fontFamily: 'BentonSans',
                     fontWeight: FontWeight.w500,
@@ -78,33 +85,28 @@ class PriceInfo extends StatelessWidget {
               ),
             ],
           ),
-        ),
-        SizedBox(
-          height: 30,
-        ),
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 22),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'Total',
-                style: TextStyle(
-                    color: Colors.white,
-                    fontFamily: 'BentonSans',
-                    fontWeight: FontWeight.w500,
-                    fontSize: 19),
+        SizedBox(height: 12.h),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text(
+              'Total',
+              style: TextStyle(
+                  color: Colors.white,
+                  fontFamily: 'BentonSans',
+                  fontWeight: FontWeight.w500,
+                  fontSize: 19),
+            ),
+            Text(
+              '${totalPrice.toStringAsFixed(2)} \$',
+              style: const TextStyle(
+                color: Colors.white,
+                fontFamily: 'BentonSans',
+                fontWeight: FontWeight.w500,
+                fontSize: 19,
               ),
-              Text(
-                '110' r'$',
-                style: TextStyle(
-                    color: Colors.white,
-                    fontFamily: 'BentonSans',
-                    fontWeight: FontWeight.w500,
-                    fontSize: 19),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ],
     );

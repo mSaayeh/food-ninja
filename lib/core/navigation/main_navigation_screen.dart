@@ -28,8 +28,8 @@ class MainNavigationScreen extends StatelessWidget {
           item: _buildNavBarItem(
             iconPath: 'assets/images/Cart.svg',
             title: 'Cart',
-            hasBadge: true,
-            badgeNumber: 3,
+            // hasBadge: true,
+            // badgeNumber: 3,
           ),
         ),
       ],
