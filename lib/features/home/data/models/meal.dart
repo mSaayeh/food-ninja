@@ -4,6 +4,7 @@ import 'package:food_ninja/features/home/data/models/restaurant.dart';
 
 class Meal extends Equatable {
   final String? imageUrl;
+  final String ref;
   final String name;
   final double rating;
   final String description;
@@ -17,11 +18,12 @@ class Meal extends Equatable {
     required this.description,
     required this.restaurant,
     required this.price,
+    required this.ref,
   });
 
   @override
   List<Object?> get props =>
-      [imageUrl, name, rating, description, restaurant, price];
+      [imageUrl, name, rating, description, restaurant, price, ref];
 
   @override
   bool get stringify => true;

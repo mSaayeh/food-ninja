@@ -4,7 +4,7 @@ import 'package:food_ninja/core/util/extensions.dart';
 
 class DoubleFallBackImage extends StatelessWidget {
   final String? mainNetworkImage;
-  final String? fallBackNetowrkImage;
+  final String? fallBackNetworkImage;
   final String fallBackLocalImage;
   final double? size;
   final BoxFit boxFit;
@@ -12,7 +12,7 @@ class DoubleFallBackImage extends StatelessWidget {
   const DoubleFallBackImage({
     super.key,
     this.mainNetworkImage,
-    this.fallBackNetowrkImage,
+    this.fallBackNetworkImage,
     required this.fallBackLocalImage,
     this.size,
     this.boxFit = BoxFit.cover,
@@ -22,7 +22,7 @@ class DoubleFallBackImage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Image.network(
       mainNetworkImage.isNullOrEmpty()
-          ? fallBackNetowrkImage!
+          ? fallBackNetworkImage!
           : mainNetworkImage!,
       height: size?.h,
       width: size?.w,
