@@ -7,6 +7,7 @@ import 'package:food_ninja/core/widgets/home_flow/home_section.dart';
 import 'package:food_ninja/core/widgets/restaurant_list_tile.dart';
 import 'package:food_ninja/di/app_module.dart';
 import 'package:food_ninja/features/home/presentation/cubit/home_cubit.dart';
+import 'package:food_ninja/features/restaurant/presentation/restaurant_view.dart';
 
 class PopularRestaurantsScreen extends StatelessWidget {
   const PopularRestaurantsScreen({super.key});
@@ -44,7 +45,18 @@ class PopularRestaurantsScreen extends StatelessWidget {
                                       .restaurants[index];
                               return RestaurantListTile(
                                 restaurant: rest,
-                                onClick: () {},
+                                onClick: () {
+                                  {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) {
+                                          return const RestaurantView();
+                                        },
+                                      ),
+                                    );
+                                  }
+                                },
                               );
                             } else {
                               return const RestaurantListTile.loading();

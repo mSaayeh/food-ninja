@@ -1,6 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:food_ninja/features/restaurant/presentation/heart_icon.dart';
+import 'package:food_ninja/features/restaurant/presentation/menu_list_view.dart';
 import 'package:food_ninja/features/restaurant/presentation/popular_icon.dart';
 
 class RestaurantView extends StatefulWidget {
@@ -35,11 +37,11 @@ class _RestaurantViewState extends State<RestaurantView> {
                   setState(
                     () {
                       sheetPosition -= details.delta.dy / dragSensitivity;
-                      if (sheetPosition < 0.25) {
-                        sheetPosition = 0.25;
+                      if (sheetPosition < 0.5) {
+                        sheetPosition = 0.5;
                       }
-                      if (sheetPosition > 1.0) {
-                        sheetPosition = 1.0;
+                      if (sheetPosition > 0.95) {
+                        sheetPosition = 0.95;
                       }
                     },
                   );
@@ -85,7 +87,7 @@ class _RestaurantViewState extends State<RestaurantView> {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(top: 24, bottom: 16),
+                          padding: const EdgeInsets.only(top: 24, bottom: 22),
                           child: Row(
                             children: [
                               const Padding(
@@ -125,6 +127,38 @@ class _RestaurantViewState extends State<RestaurantView> {
                               ),
                             );
                           },
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 24),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Text(
+                                'Popular Menu',
+                                style: TextStyle(
+                                  fontFamily: 'BentonSans Bold',
+                                  fontWeight: FontWeight.w600,
+                                  color: Color(0xff09051C),
+                                  fontSize: 24,
+                                ),
+                              ),
+                              GestureDetector(
+                                onTap: () {},
+                                child: const Text(
+                                  'View All',
+                                  style: TextStyle(
+                                      color: Color(0xffFF7C32),
+                                      fontFamily: 'BentonSans Book',
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 18),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.only(top: 18),
+                          child: MenuListView(),
                         ),
                       ],
                     ),
