@@ -1,11 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:food_ninja/core/util/get_meal.dart';
 import 'package:food_ninja/features/home/data/models/meal.dart';
-import 'package:food_ninja/features/home/data/models/restaurant.dart';
 
 abstract class MenuService {
   Future<List<Meal>> getPopularMeals();
+  Future<List<Meal>> searchMeals(String query);
 }
 
 class MenuServiceImpl implements MenuService {
@@ -18,5 +17,11 @@ class MenuServiceImpl implements MenuService {
       final doc = await e['ref'].get();
       return getMeal(doc);
     }).toList());
+  }
+  
+  @override
+  Future<List<Meal>> searchMeals(String query) {
+    // TODO: implement searchMeals
+    throw UnimplementedError();
   }
 }
