@@ -2,22 +2,31 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:food_ninja/core/widgets/double_fall_back_image.dart';
+import 'package:food_ninja/features/home/data/models/meal.dart';
 import 'package:food_ninja/features/home/data/models/restaurant.dart';
 import 'package:shimmer/shimmer.dart';
 
-class RestaurantListTile extends StatelessWidget {
+class CardListTile extends StatelessWidget {
   final Restaurant? restaurant;
   final void Function()? onClick;
+  final Meal? meal;
 
-  const RestaurantListTile.loading({super.key})
+  const CardListTile.loading({super.key})
       : restaurant = null,
-        onClick = null;
+        onClick = null,
+        meal = null;
 
-  const RestaurantListTile({
+  const CardListTile.restaurant({
     super.key,
     required this.restaurant,
     required this.onClick,
-  });
+  }) : meal = null;
+
+  const CardListTile.meal({
+    super.key,
+    required this.meal,
+    required this.onClick,
+  }) : restaurant = null;
 
   @override
   Widget build(BuildContext context) {
@@ -27,34 +36,41 @@ class RestaurantListTile extends StatelessWidget {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(22.r)),
       elevation: 100.r,
       clipBehavior: Clip.hardEdge,
-      margin: EdgeInsets.all(8.r),
+      margin: EdgeInsets.symmetric(horizontal: 8.w, vertical: 8.h),
       child: SizedBox(
         height: 184.h,
         width: 147.w,
-        child: restaurant != null
+        child: restaurant != null || meal != null
             ? InkWell(
                 onTap: onClick,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     DoubleFallBackImage(
-                      mainNetworkImage: restaurant!.imageUrl,
+                      mainNetworkImage: meal?.imageUrl,
+                      fallBackNetowrkImage: restaurant?.imageUrl,
                       fallBackLocalImage: 'assets/images/Logo.png',
                       size: 70,
                       boxFit: BoxFit.contain,
                     ),
                     SizedBox(height: 16.h),
                     Text(
-                      restaurant!.name,
+                      restaurant?.name ?? meal!.name,
                       style: Theme.of(context).textTheme.bodyLarge,
                     ),
                     SizedBox(height: 4.h),
-                    RatingBarIndicator(
-                      rating: restaurant!.rating,
-                      itemBuilder: (context, index) =>
-                          const Icon(Icons.star, color: Colors.amber),
-                      itemSize: 14.w,
-                    ),
+                    restaurant != null
+                        ? RatingBarIndicator(
+                            rating: restaurant!.rating,
+                            itemBuilder: (context, index) =>
+                                const Icon(Icons.star, color: Colors.amber),
+                            itemSize: 14.w,
+                          )
+                        : Text(
+                            '\$${meal!.price}',
+                            style: Theme.of(context).textTheme.bodyMedium,
+                            textAlign: TextAlign.center,
+                          ),
                   ],
                 ),
               )

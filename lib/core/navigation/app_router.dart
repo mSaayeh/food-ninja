@@ -3,9 +3,11 @@ import 'package:food_ninja/core/navigation/main_navigation_screen.dart';
 import 'package:food_ninja/features/auth/presentation/login/login_screen.dart';
 import 'package:food_ninja/features/auth/presentation/signup/sign_up_screen.dart';
 import 'package:food_ninja/features/auth/presentation/signup/sign_up_success_screen.dart';
+import 'package:food_ninja/features/home/data/models/restaurant.dart';
 import 'package:food_ninja/features/home/presentation/home_screen.dart';
 import 'package:food_ninja/features/onboarding/presentation/onboarding_screen.dart';
 import 'package:food_ninja/features/popular_restaurants/presentation/popular_restaurants_screen.dart';
+import 'package:food_ninja/features/restaurant/presentation/restaurant_view.dart';
 import 'package:food_ninja/features/splash/presentation/splash_screen.dart';
 import 'package:go_router/go_router.dart';
 
@@ -19,6 +21,7 @@ const signupSuccess = "/signupSuccess";
 const popularRestaurats = 'popular_restaurants';
 const popularMeals = 'popular_meals';
 const mainNavigationScreen = '/main_nav';
+const restaurant = '/restaurant';
 
 class AppRouter {
   const AppRouter._();
@@ -38,6 +41,13 @@ class AppRouter {
         builder: (context, state) => const MainNavigationScreen(),
       ),
       GoRoute(
+        path: restaurant,
+        builder: (context, state) {
+          final restaurant = state.extra as Restaurant;
+          return RestaurantView(restaurant: restaurant);
+        },
+      ),
+      GoRoute(
         path: home,
         builder: (context, state) => const HomeScreen(),
         routes: [
@@ -45,13 +55,9 @@ class AppRouter {
             path: popularRestaurats,
             builder: (context, state) => const PopularRestaurantsScreen(),
           ),
-          GoRoute(
-            path: popularMeals,
-            builder: (context, state) => const Placeholder(),
-          ),
         ],
       ),
-            GoRoute(
+      GoRoute(
         path: login,
         builder: (context, state) => const LoginScreen(),
       ),

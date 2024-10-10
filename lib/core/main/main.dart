@@ -10,6 +10,7 @@ import '../../di/app_module.dart' as di;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
   di.init();
   runApp(const MyApp());
 }

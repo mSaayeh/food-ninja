@@ -1,24 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:food_ninja/features/home/data/models/meal.dart';
 import 'package:food_ninja/features/restaurant/presentation/meal_tile.dart';
 
 class MenuListView extends StatelessWidget {
-  const MenuListView({super.key});
+  final List<Meal> meals;
+  const MenuListView({super.key, required this.meals});
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 125.h,
-      child: ListView.builder(
-        scrollDirection: Axis.horizontal,
-        itemBuilder: (context, index) {
-          return const Padding(
-            padding: EdgeInsets.only(right: 22),
-            child: MealTile(),
-          );
-        },
-        itemCount: 10,
-      ),
+    return ListView.separated(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemBuilder: (context, index) {
+        final meal = meals[index];
+        return MealTile(
+          meal: meal,
+          // TODO: Get the data from the cart service
+          cartQuantity: 0,
+          onClick: () {
+            // TODO: Navigate to meal details
+          },
+        );
+      },
+      itemCount: meals.length,
+      separatorBuilder: (BuildContext context, int index) {
+        return SizedBox(height: 20.h);
+      },
     );
   }
 }

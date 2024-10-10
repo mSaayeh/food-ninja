@@ -10,7 +10,7 @@ import 'package:food_ninja/core/widgets/restaurant_list_tile.dart';
 import 'package:food_ninja/di/app_module.dart';
 import 'package:food_ninja/features/home/presentation/cubit/home_cubit.dart';
 import 'package:food_ninja/features/home/presentation/widgets/promotions.dart';
-import 'package:food_ninja/features/restaurant/presentation/restaurant_view.dart';
+import 'package:go_router/go_router.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -55,21 +55,15 @@ class HomeScreen extends StatelessWidget {
                               itemBuilder: (context, index) {
                                 if (state.restaurantsState
                                     is RestaurantsLoading) {
-                                  return const RestaurantListTile.loading();
+                                  return const CardListTile.loading();
                                 } else {
-                                  return RestaurantListTile(
-                                    restaurant: (state.restaurantsState
-                                            as RestaurantsLoaded)
-                                        .restaurants[index],
+                                  final rest = (state.restaurantsState
+                                          as RestaurantsLoaded)
+                                      .restaurants[index];
+                                  return CardListTile.restaurant(
+                                    restaurant: rest,
                                     onClick: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) {
-                                            return const RestaurantView();
-                                          },
-                                        ),
-                                      );
+                                      context.push(restaurant, extra: rest);
                                     },
                                   );
                                 }

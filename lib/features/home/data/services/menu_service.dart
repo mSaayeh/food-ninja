@@ -30,6 +30,7 @@ class MenuServiceImpl implements MenuService {
       imageUrl: restaurantImageUrl,
       name: restaurantData['name'],
       rating: restaurantData['rating'],
+      ref: e.reference.id,
     );
     return Meal(
       imageUrl: '',
