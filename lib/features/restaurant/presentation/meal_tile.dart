@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:food_ninja/core/theme/theme.dart';
 import 'package:food_ninja/core/widgets/double_fall_back_image.dart';
+import 'package:food_ninja/features/cart/presentation/widgets/quantity_changer.dart';
 import 'package:food_ninja/features/home/data/models/meal.dart';
 import 'package:food_ninja/features/restaurant/presentation/add_to_cart_button.dart';
 import 'package:food_ninja/features/restaurant/presentation/gradient_text.dart';
@@ -67,7 +68,11 @@ class MealTile extends StatelessWidget {
         ),
         trailing: cartQuantity == 0
             ? AddToCartButton(onClick: onClick)
-            : const SizedBox(),
+            : QuantityChanger(
+                quantity: cartQuantity,
+                onPlus: () {},
+                onMinus: () {},
+              ),
       ),
     );
   }
