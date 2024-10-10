@@ -67,4 +67,5 @@ class DefaultFirebaseOptions {
     iosClientId: '772216443701-0nu3hq0q3o9gfnpvu543ijpj30s5scnk.apps.googleusercontent.com',
     iosBundleId: 'com.example.foodNinja',
   );
+
 }

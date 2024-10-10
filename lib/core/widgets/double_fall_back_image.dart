@@ -6,16 +6,28 @@ class DoubleFallBackImage extends StatelessWidget {
   final String? mainNetworkImage;
   final String? fallBackNetworkImage;
   final String fallBackLocalImage;
-  final double? size;
   final BoxFit boxFit;
+  final double? width;
+  final double? height;
 
   const DoubleFallBackImage({
     super.key,
     this.mainNetworkImage,
     this.fallBackNetworkImage,
     required this.fallBackLocalImage,
-    this.size,
+    double? size,
     this.boxFit = BoxFit.cover,
+  })  : width = size,
+        height = size;
+
+  const DoubleFallBackImage.customSize({
+    super.key,
+    this.mainNetworkImage,
+    this.fallBackNetworkImage,
+    required this.fallBackLocalImage,
+    this.boxFit = BoxFit.cover,
+    this.width,
+    this.height,
   });
 
   @override
@@ -24,15 +36,15 @@ class DoubleFallBackImage extends StatelessWidget {
       mainNetworkImage.isNullOrEmpty()
           ? fallBackNetworkImage!
           : mainNetworkImage!,
-      height: size?.h,
-      width: size?.w,
+      height: height?.h,
+      width: width?.w,
       fit: boxFit,
       alignment: Alignment.center,
       errorBuilder: (context, error, stackTrace) {
         return Image.asset(
           fallBackLocalImage,
-          height: size?.h,
-          width: size?.w,
+          height: height?.h,
+          width: width?.w,
           fit: boxFit,
         );
       },

@@ -10,6 +10,7 @@ import 'package:food_ninja/core/widgets/restaurant_list_tile.dart';
 import 'package:food_ninja/di/app_module.dart';
 import 'package:food_ninja/features/home/presentation/cubit/home_cubit.dart';
 import 'package:food_ninja/features/home/presentation/widgets/promotions.dart';
+import 'package:go_router/go_router.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -87,7 +88,13 @@ class HomeScreen extends StatelessWidget {
                                 return MealListTile(
                                   meal: (state.menuState as MenuLoaded)
                                       .meals[index],
-                                  onClick: () {},
+                                  onClick: () {
+                                    context.push(
+                                      menuDetails,
+                                      extra: (state.menuState as MenuLoaded)
+                                          .meals[index],
+                                    );
+                                  },
                                 );
                               }
                             },

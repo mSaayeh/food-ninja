@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:food_ninja/core/navigation/app_router.dart';
@@ -45,14 +46,18 @@ class _SplashScreenState extends State<SplashScreen>
   void initState() {
     super.initState();
     initAnimations();
-    Future.delayed(
-      const Duration(seconds: 3),
-      () {
-        if (context.mounted) {
-          context.pushReplacement(login);
-        }
-      },
-    );
+    _checkAuth();
+  }
+
+  void _checkAuth() async {
+    await Future.delayed(const Duration(seconds: 3));
+    if (context.mounted) {
+      if (FirebaseAuth.instance.currentUser == null) {
+        context.pushReplacement(login);
+      } else {
+        context.pushReplacement(mainNavigationScreen);
+      }
+    }
   }
 
   @override

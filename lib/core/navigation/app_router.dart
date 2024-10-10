@@ -3,7 +3,9 @@ import 'package:food_ninja/core/navigation/main_navigation_screen.dart';
 import 'package:food_ninja/features/auth/presentation/login/login_screen.dart';
 import 'package:food_ninja/features/auth/presentation/signup/sign_up_screen.dart';
 import 'package:food_ninja/features/auth/presentation/signup/sign_up_success_screen.dart';
+import 'package:food_ninja/features/home/data/models/meal.dart';
 import 'package:food_ninja/features/home/presentation/home_screen.dart';
+import 'package:food_ninja/features/menu_details/menu_details.dart';
 import 'package:food_ninja/features/onboarding/presentation/onboarding_screen.dart';
 import 'package:food_ninja/features/popular_restaurants/presentation/popular_restaurants_screen.dart';
 import 'package:food_ninja/features/splash/presentation/splash_screen.dart';
@@ -19,6 +21,7 @@ const signupSuccess = "/signupSuccess";
 const popularRestaurats = 'popular_restaurants';
 const popularMeals = 'popular_meals';
 const mainNavigationScreen = '/main_nav';
+const menuDetails = '/menu_details';
 
 class AppRouter {
   const AppRouter._();
@@ -51,7 +54,7 @@ class AppRouter {
           ),
         ],
       ),
-            GoRoute(
+      GoRoute(
         path: login,
         builder: (context, state) => const LoginScreen(),
       ),
@@ -62,7 +65,14 @@ class AppRouter {
       GoRoute(
         path: signupSuccess,
         builder: (context, state) => const SignUpSuccessScreen(),
-      )
+      ),
+      GoRoute(
+        path: menuDetails,
+        builder: (context, state) {
+          Meal meal = state.extra as Meal;
+          return MenuDetails(meal: meal);
+        },
+      ),
     ],
     errorBuilder: (context, state) {
       return _errorRoute();
