@@ -40,7 +40,7 @@ class _RestaurantViewState extends State<RestaurantView> {
                 children: [
                   DoubleFallBackImage(
                     mainNetworkImage: rest.detailsImageUrl,
-                    fallBackNetowrkImage: rest.imageUrl,
+                    fallBackNetworkImage: rest.imageUrl,
                     fallBackLocalImage: 'assets/images/Logo.png',
                     size: height * 0.45,
                   ),

@@ -6,6 +6,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:food_ninja/core/navigation/app_router.dart';
 import 'package:food_ninja/core/widgets/background_widget.dart';
+import 'package:food_ninja/features/auth/data/model/user.dart';
+import 'package:food_ninja/features/auth/data/util/firestore_auth_helper.dart';
 import 'package:food_ninja/features/auth/widgets/auth_text_form_field.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -39,20 +41,29 @@ class _LoginScreenState extends State<LoginScreen> {
         context.go(mainNavigationScreen);
       }
     } on FirebaseAuthException catch (error) {
-      ScaffoldMessenger.of(context).clearSnackBars();
-      ScaffoldMessenger.of(context).showSnackBar(
+      ScaffoldMessenger.maybeOf(context)?.clearSnackBars();
+      ScaffoldMessenger.maybeOf(context)?.showSnackBar(
         SnackBar(content: Text(error.message ?? 'Authentication failed')),
       );
     }
   }
 
-  Future<UserCredential?> loginWithGoogle() async {
+  Future<void> loginWithGoogle() async {
     try {
       final googleUser = await _googleSignIn.signIn();
       final googleAuth = await googleUser?.authentication;
       final credential = GoogleAuthProvider.credential(
           idToken: googleAuth?.idToken, accessToken: googleAuth?.accessToken);
-      return _firebaseAuth.signInWithCredential(credential);
+      final userCredentials =
+          await _firebaseAuth.signInWithCredential(credential);
+      if (userCredentials.additionalUserInfo?.isNewUser == true) {
+        final user = AuthedUser(
+          id: userCredentials.user!.uid,
+          name: googleUser!.displayName ?? "Google User",
+          email: googleUser.email,
+        );
+        await FirestoreAuthHelper.createNewUser(user);
+      }
     } on FirebaseException catch (error) {
       ScaffoldMessenger.of(context).clearSnackBars();
       ScaffoldMessenger.of(context).showSnackBar(
@@ -60,7 +71,6 @@ class _LoginScreenState extends State<LoginScreen> {
       );
       log("Failed to signin ${error.message}");
     }
-    return null;
   }
 
   void _onGoogleSignInClicked() async {

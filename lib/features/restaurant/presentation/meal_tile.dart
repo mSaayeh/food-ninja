@@ -33,7 +33,7 @@ class MealTile extends StatelessWidget {
           borderRadius: BorderRadius.circular(16.r),
           child: DoubleFallBackImage(
             mainNetworkImage: meal.imageUrl,
-            fallBackNetowrkImage: meal.restaurant.imageUrl,
+            fallBackNetworkImage: meal.restaurant.imageUrl,
             fallBackLocalImage: 'assets/images/Logo.png',
             size: 62,
             boxFit: BoxFit.cover,

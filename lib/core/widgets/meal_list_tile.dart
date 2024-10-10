@@ -38,7 +38,7 @@ class MealListTile extends StatelessWidget {
         child: meal != null
             ? DoubleFallBackImage(
                 mainNetworkImage: meal!.imageUrl,
-                fallBackNetowrkImage: meal!.restaurant.imageUrl,
+                fallBackNetworkImage: meal!.restaurant.imageUrl,
                 fallBackLocalImage: 'assets/images/Logo.png',
                 size: 64,
               )

@@ -48,7 +48,7 @@ class CardListTile extends StatelessWidget {
                   children: [
                     DoubleFallBackImage(
                       mainNetworkImage: meal?.imageUrl,
-                      fallBackNetowrkImage: restaurant?.imageUrl,
+                      fallBackNetworkImage: restaurant?.imageUrl,
                       fallBackLocalImage: 'assets/images/Logo.png',
                       size: 70,
                       boxFit: BoxFit.contain,

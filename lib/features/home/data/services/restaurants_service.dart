@@ -58,7 +58,7 @@ class RestaurantsServiceImpl implements RestaurantsService {
           rating: restaurant['rating'],
           ref: restaurant.reference.id,
         ),
-        price: e['price'],
+        price: e['price'], ref: e.reference.id,
       );
     }).toList());
     return Restaurant(
