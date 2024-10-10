@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:food_ninja/core/navigation/app_router.dart';
 import 'package:food_ninja/core/widgets/background_widget.dart';
 import 'package:food_ninja/core/widgets/home_flow/home_header.dart';
 import 'package:food_ninja/core/widgets/home_flow/home_section.dart';
 import 'package:food_ninja/core/widgets/restaurant_list_tile.dart';
 import 'package:food_ninja/di/app_module.dart';
 import 'package:food_ninja/features/home/presentation/cubit/home_cubit.dart';
+import 'package:go_router/go_router.dart';
 
 class PopularRestaurantsScreen extends StatelessWidget {
   const PopularRestaurantsScreen({super.key});
@@ -42,12 +44,16 @@ class PopularRestaurantsScreen extends StatelessWidget {
                               final rest =
                                   (state.restaurantsState as RestaurantsLoaded)
                                       .restaurants[index];
-                              return RestaurantListTile(
+                              return CardListTile.restaurant(
                                 restaurant: rest,
-                                onClick: () {},
+                                onClick: () {
+                                  {
+                                    context.push(restaurant, extra: rest);
+                                  }
+                                },
                               );
                             } else {
-                              return const RestaurantListTile.loading();
+                              return const CardListTile.loading();
                             }
                           },
                           itemCount: state.restaurantsState is RestaurantsLoaded

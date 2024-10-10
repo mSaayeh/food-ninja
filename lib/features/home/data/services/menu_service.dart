@@ -1,8 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:food_ninja/core/util/get_meal.dart';
+import 'package:food_ninja/core/util/get_meal.dart' as util;
 import 'package:food_ninja/features/home/data/models/meal.dart';
-import 'package:food_ninja/features/home/data/models/restaurant.dart';
 
 abstract class MenuService {
   Future<List<Meal>> getPopularMeals();
@@ -18,5 +16,9 @@ class MenuServiceImpl implements MenuService {
       final doc = await e['ref'].get();
       return getMeal(doc);
     }).toList());
+  }
+
+  Future<Meal> getMeal(DocumentSnapshot e) async {
+    return util.getMeal(e);
   }
 }
