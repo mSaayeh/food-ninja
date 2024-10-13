@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:food_ninja/core/widgets/meals_list/widgets/meal_tile.dart';
 import 'package:food_ninja/features/home/data/models/meal.dart';
-import 'package:food_ninja/features/restaurant/presentation/meal_tile.dart';
 
-class MenuListView extends StatelessWidget {
+class MealsList extends StatelessWidget {
   final List<Meal> meals;
-  const MenuListView({super.key, required this.meals});
+  const MealsList({super.key, required this.meals});
 
   @override
   Widget build(BuildContext context) {

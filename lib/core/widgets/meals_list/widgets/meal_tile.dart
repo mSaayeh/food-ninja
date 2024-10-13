@@ -5,7 +5,7 @@ import 'package:food_ninja/core/widgets/double_fall_back_image.dart';
 import 'package:food_ninja/features/cart/presentation/widgets/quantity_changer.dart';
 import 'package:food_ninja/features/home/data/models/meal.dart';
 import 'package:food_ninja/features/restaurant/presentation/add_to_cart_button.dart';
-import 'package:food_ninja/features/restaurant/presentation/gradient_text.dart';
+import 'package:food_ninja/core/widgets/gradient_text.dart';
 
 class MealTile extends StatelessWidget {
   final Meal meal;
