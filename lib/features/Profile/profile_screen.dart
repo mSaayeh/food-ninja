@@ -5,42 +5,29 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:food_ninja/core/navigation/app_router.dart';
 import 'package:food_ninja/features/Profile/profile_cubit.dart';
 import 'package:food_ninja/features/Profile/widgets/profile_list_tile.dart';
-import 'package:food_ninja/features/auth/data/model/user.dart';
 import 'package:go_router/go_router.dart';
 
-class ProfileScreenContent extends StatelessWidget {
-  final AuthedUser user;
-
-  const ProfileScreenContent(this.user, {super.key});
+class ProfileScreen extends StatelessWidget {
+  const ProfileScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    void onLogoutClick() async {
-      await FirebaseAuth.instance.signOut();
-      if (context.mounted) {
-        context.go(splash);
-      }
-    }
-
     return BlocProvider(
       create: (context) => ProfileCubit()..loadProfile(),
       child: SafeArea(
-        child: BlocListener<ProfileCubit, ProfileState>(
-          listener: (context, state) {
+        child: BlocBuilder<ProfileCubit, ProfileState>(
+          builder: (context, state) {
             switch (state) {
               case ProfileLoading():
-                const Center(
+                return const Center(
                   child: CircularProgressIndicator(),
                 );
               case ProfileError():
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text(state.message),
-                    backgroundColor: Colors.red,
-                  ),
+                return Center(
+                  child: Text(state.message),
                 );
               case ProfileLoaded():
-                Column(
+                return Column(
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -56,11 +43,11 @@ class ProfileScreenContent extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Hello, ${user.name}',
+                              'Hello, ${state.user.name}',
                               style: TextStyle(fontSize: 25.sp),
                             ),
                             Text(
-                              user.email,
+                              state.user.email,
                               style: TextStyle(
                                 fontSize: 14.sp,
                                 color: const Color(0xFF3B3B3B).withOpacity(0.3),
@@ -81,7 +68,12 @@ class ProfileScreenContent extends StatelessWidget {
                             ProfileListTile(
                               leading: const Icon(Icons.logout),
                               title: 'Log out',
-                              onTab: onLogoutClick,
+                              onTab: () {
+                                FirebaseAuth.instance.signOut();
+                                if (context.mounted) {
+                                  context.go(splash);
+                                }
+                              },
                               isLogout: true,
                             ),
                           ],
