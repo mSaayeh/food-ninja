@@ -28,10 +28,16 @@ class _LoginScreenState extends State<LoginScreen> {
   final _fromKey = GlobalKey<FormState>();
   String _email = "";
   String _password = "";
+  bool isLoading = false;
 
   void _onLoginClicked() async {
     if (_fromKey.currentState!.validate()) {
+      setState(() {
+        isLoading = true;
+      });
       _fromKey.currentState!.save();
+    } else {
+      return;
     }
 
     try {
@@ -46,6 +52,9 @@ class _LoginScreenState extends State<LoginScreen> {
         SnackBar(content: Text(error.message ?? 'Authentication failed')),
       );
     }
+    setState(() {
+      isLoading = false;
+    });
   }
 
   Future<void> loginWithGoogle() async {
@@ -74,135 +83,148 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void _onGoogleSignInClicked() async {
+    setState(() {
+      isLoading = true;
+    });
     await loginWithGoogle();
     log('Login Succeeded with user ${_firebaseAuth.currentUser}');
     if (context.mounted) {
       context.go(mainNavigationScreen);
     }
+    setState(() {
+      isLoading = false;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: BackgroundWidget(
-          child: Center(
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Image.asset('assets/images/Logo.png'),
-                  SvgPicture.asset("assets/images/App_Name.svg"),
-                  SizedBox(height: 64.h),
-                  Text('Login To Your Account',
-                      style: Theme.of(context).textTheme.titleSmall),
-                  Form(
-                    key: _fromKey,
-                    child: Padding(
-                      padding: EdgeInsets.only(
-                        left: 24.w,
-                        right: 24.w,
-                        top: 40.h,
-                        bottom: 20.h,
-                      ),
-                      child: Column(
-                        children: [
-                          AuthTextFormField(
-                            label: 'Email',
-                            icon: SvgPicture.asset('assets/icons/Message.svg'),
-                            isPassword: false,
-                            validator: (value) {
-                              if (value == null ||
-                                  value.trim().isEmpty ||
-                                  !value.contains('@')) {
-                                return 'Please enter a valid email.';
-                              }
-                              return null;
-                            },
-                            onSave: (value) {
-                              _email = value!;
-                            },
-                            keyboardType: TextInputType.emailAddress,
+        child: isLoading
+            ? const Center(
+                child: CircularProgressIndicator(),
+              )
+            : BackgroundWidget(
+                child: Center(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Image.asset('assets/images/Logo.png'),
+                        SvgPicture.asset("assets/images/App_Name.svg"),
+                        SizedBox(height: 64.h),
+                        Text('Login To Your Account',
+                            style: Theme.of(context).textTheme.titleSmall),
+                        Form(
+                          key: _fromKey,
+                          child: Padding(
+                            padding: EdgeInsets.only(
+                              left: 24.w,
+                              right: 24.w,
+                              top: 40.h,
+                              bottom: 20.h,
+                            ),
+                            child: Column(
+                              children: [
+                                AuthTextFormField(
+                                  label: 'Email',
+                                  icon: SvgPicture.asset(
+                                      'assets/icons/Message.svg'),
+                                  isPassword: false,
+                                  validator: (value) {
+                                    if (value == null ||
+                                        value.trim().isEmpty ||
+                                        !value.contains('@')) {
+                                      return 'Please enter a valid email.';
+                                    }
+                                    return null;
+                                  },
+                                  onSave: (value) {
+                                    _email = value!;
+                                  },
+                                  keyboardType: TextInputType.emailAddress,
+                                ),
+                                const SizedBox(height: 12),
+                                AuthTextFormField(
+                                  label: 'Password',
+                                  icon: SvgPicture.asset(
+                                      'assets/icons/Password.svg'),
+                                  isPassword: true,
+                                  validator: (value) {
+                                    if (value == null ||
+                                        value.trim().length < 6) {
+                                      return 'Password must be at least 6 characters.';
+                                    }
+                                    return null;
+                                  },
+                                  onSave: (value) {
+                                    _password = value!;
+                                  },
+                                )
+                              ],
+                            ),
                           ),
-                          const SizedBox(height: 12),
-                          AuthTextFormField(
-                            label: 'Password',
-                            icon: SvgPicture.asset('assets/icons/Password.svg'),
-                            isPassword: true,
-                            validator: (value) {
-                              if (value == null || value.trim().length < 6) {
-                                return 'Password must be at least 6 characters.';
-                              }
-                              return null;
-                            },
-                            onSave: (value) {
-                              _password = value!;
-                            },
-                          )
-                        ],
-                      ),
+                        ),
+                        Text('Or Continue With',
+                            style: Theme.of(context).textTheme.headlineSmall),
+                        Padding(
+                          padding: EdgeInsets.only(
+                            top: 20.h,
+                            bottom: 76.h,
+                          ),
+                          child: OutlinedButton.icon(
+                            onPressed: _onGoogleSignInClicked,
+                            icon: Padding(
+                              padding: EdgeInsetsDirectional.only(end: 12.w),
+                              child: SvgPicture.asset(
+                                'assets/icons/Google.svg',
+                                width: 25.w,
+                                height: 25.h,
+                              ),
+                            ),
+                            label: Text(
+                              'Google',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headlineSmall!
+                                  .copyWith(letterSpacing: 0.5),
+                              textAlign: TextAlign.center,
+                            ),
+                            style: OutlinedButton.styleFrom(
+                              padding: EdgeInsets.only(
+                                top: 16.h,
+                                bottom: 16.h,
+                                right: 34.w,
+                                left: 31.w,
+                              ),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15.r),
+                              ),
+                              side: const BorderSide(
+                                  color: Color(0xFFF4F4F4), width: 1),
+                            ),
+                          ),
+                        ),
+                        FilledButton(
+                          onPressed: _onLoginClicked,
+                          child: const Text('Login'),
+                        ),
+                        const SizedBox(height: 16),
+                        TextButton(
+                          onPressed: () {
+                            context.go(signup);
+                          },
+                          child: const Text(
+                            'create an account',
+                            style: TextStyle(color: gradientDarkGreen),
+                          ),
+                        )
+                      ],
                     ),
                   ),
-                  Text('Or Continue With',
-                      style: Theme.of(context).textTheme.headlineSmall),
-                  Padding(
-                    padding: EdgeInsets.only(
-                      top: 20.h,
-                      bottom: 76.h,
-                    ),
-                    child: OutlinedButton.icon(
-                      onPressed: _onGoogleSignInClicked,
-                      icon: Padding(
-                        padding: EdgeInsetsDirectional.only(end: 12.w),
-                        child: SvgPicture.asset(
-                          'assets/icons/Google.svg',
-                          width: 25.w,
-                          height: 25.h,
-                        ),
-                      ),
-                      label: Text(
-                        'Google',
-                        style: Theme.of(context)
-                            .textTheme
-                            .headlineSmall!
-                            .copyWith(letterSpacing: 0.5),
-                        textAlign: TextAlign.center,
-                      ),
-                      style: OutlinedButton.styleFrom(
-                        padding: EdgeInsets.only(
-                          top: 16.h,
-                          bottom: 16.h,
-                          right: 34.w,
-                          left: 31.w,
-                        ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15.r),
-                        ),
-                        side: const BorderSide(
-                            color: Color(0xFFF4F4F4), width: 1),
-                      ),
-                    ),
-                  ),
-                  FilledButton(
-                    onPressed: _onLoginClicked,
-                    child: const Text('Login'),
-                  ),
-                  const SizedBox(height: 16),
-                  TextButton(
-                    onPressed: () {
-                      context.go(signup);
-                    },
-                    child: const Text(
-                      'create an account',
-                      style: TextStyle(color: gradientDarkGreen),
-                    ),
-                  )
-                ],
+                ),
               ),
-            ),
-          ),
-        ),
       ),
     );
   }
