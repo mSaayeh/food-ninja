@@ -28,10 +28,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
   String _name = "";
   String _email = "";
   String _password = "";
+  bool isLoading = false;
 
   void _onCreatedAccountClicked() async {
     if (_formKey.currentState!.validate()) {
+      setState(() {
+        isLoading = true;
+      });
       _formKey.currentState!.save();
+    } else {
+      return;
     }
 
     try {
@@ -55,110 +61,121 @@ class _SignUpScreenState extends State<SignUpScreen> {
         SnackBar(content: Text(error.message ?? 'FireStore failed')),
       );
     }
+    setState(() {
+      isLoading = false;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: BackgroundWidget(
-          child: Center(
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Image.asset('assets/images/Logo.png'),
-                  SvgPicture.asset("assets/images/App_Name.svg"),
-                  SizedBox(height: 64.h),
-                  Text('Sign Up For Free',
-                      style: Theme.of(context).textTheme.titleSmall),
-                  Form(
-                    key: _formKey,
-                    child: Padding(
-                      padding: EdgeInsets.only(
-                        left: 24.w,
-                        right: 24.w,
-                        top: 40.h,
-                        bottom: 118.h,
-                      ),
-                      child: Column(
-                        children: <Widget>[
-                          AuthTextFormField(
-                            label: 'Name',
-                            icon: SvgPicture.asset("assets/icons/Profile.svg"),
-                            isPassword: false,
-                            validator: (value) {
-                              if (value == null ||
-                                  value.trim().isEmpty ||
-                                  value.trim().length < 4) {
-                                return 'Name must be at least 4 characters.';
-                              }
-                              return null;
-                            },
-                            onSave: (value) {
-                              _name = value!;
-                            },
-                            keyboardType: TextInputType.name,
-                            textCapitalization: TextCapitalization.words,
+        child: isLoading
+            ? const Center(
+                child: CircularProgressIndicator(),
+              )
+            : BackgroundWidget(
+                child: Center(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Image.asset('assets/images/Logo.png'),
+                        SvgPicture.asset("assets/images/App_Name.svg"),
+                        SizedBox(height: 64.h),
+                        Text('Sign Up For Free',
+                            style: Theme.of(context).textTheme.titleSmall),
+                        Form(
+                          key: _formKey,
+                          child: Padding(
+                            padding: EdgeInsets.only(
+                              left: 24.w,
+                              right: 24.w,
+                              top: 40.h,
+                              bottom: 118.h,
+                            ),
+                            child: Column(
+                              children: <Widget>[
+                                AuthTextFormField(
+                                  label: 'Name',
+                                  icon: SvgPicture.asset(
+                                      "assets/icons/Profile.svg"),
+                                  isPassword: false,
+                                  validator: (value) {
+                                    if (value == null ||
+                                        value.trim().isEmpty ||
+                                        value.trim().length < 4) {
+                                      return 'Name must be at least 4 characters.';
+                                    }
+                                    return null;
+                                  },
+                                  onSave: (value) {
+                                    _name = value!;
+                                  },
+                                  keyboardType: TextInputType.name,
+                                  textCapitalization: TextCapitalization.words,
+                                ),
+                                const SizedBox(height: 12),
+                                AuthTextFormField(
+                                  label: 'Email',
+                                  icon: SvgPicture.asset(
+                                      "assets/icons/Message.svg"),
+                                  isPassword: false,
+                                  validator: (value) {
+                                    if (value == null ||
+                                        value.trim().isEmpty ||
+                                        !value.contains('@')) {
+                                      return 'Please enter a valid email.';
+                                    }
+                                    return null;
+                                  },
+                                  onSave: (value) {
+                                    _email = value!;
+                                  },
+                                  keyboardType: TextInputType.emailAddress,
+                                ),
+                                const SizedBox(height: 12),
+                                AuthTextFormField(
+                                  label: 'Password',
+                                  icon: SvgPicture.asset(
+                                      "assets/icons/Password.svg"),
+                                  isPassword: true,
+                                  validator: (value) {
+                                    if (value == null ||
+                                        value.trim().length < 6) {
+                                      return 'Password must be at least 6 characters.';
+                                    }
+                                    return null;
+                                  },
+                                  onSave: (value) {
+                                    _password = value!;
+                                  },
+                                )
+                              ],
+                            ),
                           ),
-                          const SizedBox(height: 12),
-                          AuthTextFormField(
-                            label: 'Email',
-                            icon: SvgPicture.asset("assets/icons/Message.svg"),
-                            isPassword: false,
-                            validator: (value) {
-                              if (value == null ||
-                                  value.trim().isEmpty ||
-                                  !value.contains('@')) {
-                                return 'Please enter a valid email.';
-                              }
-                              return null;
-                            },
-                            onSave: (value) {
-                              _email = value!;
-                            },
-                            keyboardType: TextInputType.emailAddress,
+                        ),
+                        FilledButton(
+                          onPressed: _onCreatedAccountClicked,
+                          child: const Text('Create Account'),
+                        ),
+                        const SizedBox(height: 16),
+                        TextButton(
+                          onPressed: () {
+                            context.go(login);
+                            log("login success");
+                          },
+                          child: const Text(
+                            'already have an account?',
+                            style: TextStyle(color: gradientDarkGreen),
                           ),
-                          const SizedBox(height: 12),
-                          AuthTextFormField(
-                            label: 'Password',
-                            icon: SvgPicture.asset("assets/icons/Password.svg"),
-                            isPassword: true,
-                            validator: (value) {
-                              if (value == null || value.trim().length < 6) {
-                                return 'Password must be at least 6 characters.';
-                              }
-                              return null;
-                            },
-                            onSave: (value) {
-                              _password = value!;
-                            },
-                          )
-                        ],
-                      ),
+                        )
+                      ],
                     ),
                   ),
-                  FilledButton(
-                    onPressed: _onCreatedAccountClicked,
-                    child: const Text('Create Account'),
-                  ),
-                  const SizedBox(height: 16),
-                  TextButton(
-                    onPressed: () {
-                      context.go(login);
-                      log("login success");
-                    },
-                    child: const Text(
-                      'already have an account?',
-                      style: TextStyle(color: gradientDarkGreen),
-                    ),
-                  )
-                ],
+                ),
               ),
-            ),
-          ),
-        ),
       ),
     );
   }

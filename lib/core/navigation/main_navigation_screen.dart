@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:food_ninja/core/theme/theme.dart';
+import 'package:food_ninja/features/Profile/profile_screen.dart';
 import 'package:food_ninja/features/cart/presentation/cart_view.dart';
 import 'package:food_ninja/features/home/presentation/home_screen.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
@@ -30,6 +31,13 @@ class MainNavigationScreen extends StatelessWidget {
             title: 'Cart',
             // hasBadge: true,
             // badgeNumber: 3,
+          ),
+        ),
+        PersistentTabConfig(
+          screen: const ProfileScreen(),
+          item: _buildNavBarItem(
+            iconPath: 'assets/images/Profile.svg',
+            title: 'Profile',
           ),
         ),
       ],
