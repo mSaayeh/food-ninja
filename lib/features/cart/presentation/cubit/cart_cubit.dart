@@ -11,7 +11,7 @@ class CartCubit extends Cubit<CartState> {
 
   void increaseQuantity(CartItem cartItem) async {
     emit(const CartLoading());
-    await cartService.addToCart(cartItem.meal.ref, 1);
+    await cartService.addToCart(cartItem.meal.ref.path, 1);
     Future.delayed(const Duration(milliseconds: 500), () {
       emit(const CartInitial());
     });
@@ -20,9 +20,9 @@ class CartCubit extends Cubit<CartState> {
   void decreaseQuantity(CartItem cartItem) async {
     emit(const CartLoading());
     if (cartItem.quantity == 1) {
-      await cartService.removeFromCart(cartItem.meal.ref);
+      await cartService.removeFromCart(cartItem.meal.ref.path);
     } else {
-      await cartService.addToCart(cartItem.meal.ref, -1);
+      await cartService.addToCart(cartItem.meal.ref.path, -1);
     }
     Future.delayed(const Duration(milliseconds: 500), () {
       emit(const CartInitial());

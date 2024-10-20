@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:food_ninja/core/widgets/double_fall_back_image.dart';
+import 'package:food_ninja/core/widgets/meals_list/meals_list.dart';
 import 'package:food_ninja/di/app_module.dart';
 import 'package:food_ninja/features/home/data/models/restaurant.dart';
 import 'package:food_ninja/features/restaurant/cubit/restaurant_details_cubit.dart';
-import 'package:food_ninja/features/restaurant/presentation/menu_list_view.dart';
 import 'package:food_ninja/features/restaurant/presentation/rating_indicator_with_number.dart';
 
 class RestaurantView extends StatefulWidget {
@@ -117,7 +117,7 @@ class _RestaurantViewState extends State<RestaurantView> {
                                         ),
                                   rest.meals == null
                                       ? const SizedBox()
-                                      : MenuListView(
+                                      : MealsList(
                                           meals: rest.meals!,
                                         ),
                                 ],

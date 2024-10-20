@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:food_ninja/core/util/get_meal.dart' as util;
+import 'package:food_ninja/core/util/get_meal.dart';
 import 'package:food_ninja/features/home/data/models/meal.dart';
 
 abstract class MenuService {
@@ -16,9 +16,5 @@ class MenuServiceImpl implements MenuService {
       final doc = await e['ref'].get();
       return getMeal(doc);
     }).toList());
-  }
-
-  Future<Meal> getMeal(DocumentSnapshot e) async {
-    return util.getMeal(e);
   }
 }

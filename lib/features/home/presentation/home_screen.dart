@@ -6,6 +6,7 @@ import 'package:food_ninja/core/widgets/background_widget.dart';
 import 'package:food_ninja/core/widgets/home_flow/home_header.dart';
 import 'package:food_ninja/core/widgets/home_flow/home_section.dart';
 import 'package:food_ninja/core/widgets/meal_list_tile.dart';
+import 'package:food_ninja/core/widgets/meals_list/meals_list.dart';
 import 'package:food_ninja/core/widgets/restaurant_list_tile.dart';
 import 'package:food_ninja/di/app_module.dart';
 import 'package:food_ninja/features/home/presentation/cubit/home_cubit.dart';
@@ -80,30 +81,25 @@ class HomeScreen extends StatelessWidget {
                         ),
                         HomeSection(
                           title: 'Popular Menu',
-                          child: ListView.separated(
-                            physics: const ClampingScrollPhysics(),
-                            padding: EdgeInsets.only(bottom: 16.h),
-                            shrinkWrap: true,
-                            itemBuilder: (context, index) {
-                              if (state.menuState is MenuLoading) {
-                                return const MealListTile.loading();
-                              } else {
-                                return MealListTile(
-                                  meal: (state.menuState as MenuLoaded)
-                                      .meals[index],
-                                  onClick: () {},
-                                );
-                              }
-                            },
-                            itemCount: state.menuState is MenuLoading
-                                ? 3
-                                : (state.menuState as MenuLoaded).meals.length,
-                            separatorBuilder:
-                                (BuildContext context, int index) =>
-                                    SizedBox(height: 10.h),
-                          ),
+                          child: (state.menuState is MenuLoaded)
+                              ? MealsList(
+                                  meals: (state.menuState as MenuLoaded).meals,
+                                  separatorHeight: 10,
+                                )
+                              : ListView.separated(
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  padding: EdgeInsets.only(bottom: 16.h),
+                                  shrinkWrap: true,
+                                  itemBuilder: (context, index) {
+                                    return const MealListTile.loading();
+                                  },
+                                  itemCount: 3,
+                                  separatorBuilder:
+                                      (BuildContext context, int index) =>
+                                          SizedBox(height: 10.h),
+                                ),
                         ),
-                        SizedBox(height: 70.h)
+                        SizedBox(height: 100.h)
                       ],
                     );
                   },

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:food_ninja/core/theme/theme.dart';
-import 'package:food_ninja/features/restaurant/presentation/gradient_text.dart';
+import 'package:food_ninja/core/widgets/gradient_text.dart';
 
 class PopularIcon extends StatelessWidget {
   const PopularIcon({super.key});
