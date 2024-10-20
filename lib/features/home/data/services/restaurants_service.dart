@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:food_ninja/features/home/data/models/meal.dart';
+import 'package:food_ninja/core/util/get_meal.dart';
 import 'package:food_ninja/features/home/data/models/restaurant.dart';
 
 abstract class RestaurantsService {
@@ -43,24 +43,7 @@ class RestaurantsServiceImpl implements RestaurantsService {
       detailsImageUrl = 'assets/images/Logo.png';
     }
     final meals = await restaurant.reference.collection('meals').get();
-    final mealsList = await Future.wait(meals.docs.map((e) async {
-      // TODO: Change with getMeal Function
-      // final imageUrl =
-      //     await FirebaseStorage.instance.ref(e['image_url']).getDownloadURL();
-      return Meal(
-        imageUrl: imageUrl,
-        name: e['name'],
-        rating: e['rating'],
-        description: e['description'],
-        restaurant: Restaurant(
-          imageUrl: imageUrl,
-          name: restaurant['name'],
-          rating: restaurant['rating'],
-          ref: restaurant.reference.id,
-        ),
-        price: e['price'], ref: e.reference.id,
-      );
-    }).toList());
+    final mealsList = await Future.wait(meals.docs.map(getMeal).toList());
     return Restaurant(
       imageUrl: imageUrl,
       name: restaurant['name'],

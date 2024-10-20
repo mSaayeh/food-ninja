@@ -2,20 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:food_ninja/core/theme/theme.dart';
 import 'package:food_ninja/core/widgets/double_fall_back_image.dart';
-import 'package:food_ninja/features/cart/presentation/widgets/quantity_changer.dart';
-import 'package:food_ninja/features/home/data/models/meal.dart';
-import 'package:food_ninja/features/restaurant/presentation/add_to_cart_button.dart';
 import 'package:food_ninja/core/widgets/gradient_text.dart';
+import 'package:food_ninja/features/cart/data/models/cart_item.dart';
+import 'package:food_ninja/features/cart/presentation/widgets/quantity_changer.dart';
+import 'package:food_ninja/features/restaurant/presentation/add_to_cart_button.dart';
 
 class MealTile extends StatelessWidget {
-  final Meal meal;
-  final VoidCallback onClick;
-  final int cartQuantity;
+  final CartItem cartItem;
+  final VoidCallback onIncreaseClicked;
+  final VoidCallback onDecreaseClicked;
   const MealTile({
     super.key,
-    required this.meal,
-    required this.onClick,
-    required this.cartQuantity,
+    required this.onIncreaseClicked,
+    required this.onDecreaseClicked,
+    required this.cartItem,
   });
 
   @override
@@ -33,15 +33,15 @@ class MealTile extends StatelessWidget {
         leading: ClipRRect(
           borderRadius: BorderRadius.circular(16.r),
           child: DoubleFallBackImage(
-            mainNetworkImage: meal.imageUrl,
-            fallBackNetworkImage: meal.restaurant.imageUrl,
+            mainNetworkImage: cartItem.meal.imageUrl,
+            fallBackNetworkImage: cartItem.meal.restaurant.imageUrl,
             fallBackLocalImage: 'assets/images/Logo.png',
             size: 62,
             boxFit: BoxFit.cover,
           ),
         ),
         title: Text(
-          meal.name,
+          cartItem.meal.name,
           style: TextStyle(
             color: const Color(0xFF3B3B3B),
             fontFamily: 'BentonSans',
@@ -51,7 +51,7 @@ class MealTile extends StatelessWidget {
           overflow: TextOverflow.ellipsis,
         ),
         subtitle: GradientText(
-          text: "\$ ${meal.price}",
+          text: "\$ ${cartItem.meal.price}",
           gradient: const LinearGradient(
             colors: [
               gradientLightGreen,
@@ -66,12 +66,12 @@ class MealTile extends StatelessWidget {
             fontSize: 12.sp,
           ),
         ),
-        trailing: cartQuantity == 0
-            ? AddToCartButton(onClick: onClick)
+        trailing: cartItem.quantity == 0
+            ? AddToCartButton(onClick: onIncreaseClicked)
             : QuantityChanger(
-                quantity: cartQuantity,
-                onPlus: () {},
-                onMinus: () {},
+                quantity: cartItem.quantity,
+                onPlus: onIncreaseClicked,
+                onMinus: onDecreaseClicked,
               ),
       ),
     );

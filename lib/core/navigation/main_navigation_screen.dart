@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -12,50 +14,58 @@ class MainNavigationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PersistentTabView(
-      navBarOverlap: const NavBarOverlap.full(),
-      navBarHeight: 64.h,
-      margin: EdgeInsets.all(10.r),
-      tabs: [
-        PersistentTabConfig(
-          screen: const HomeScreen(),
-          item: _buildNavBarItem(
-            iconPath: 'assets/images/Home.svg',
-            title: "Home",
-          ),
-        ),
-        PersistentTabConfig(
-          screen: const CartView(),
-          item: _buildNavBarItem(
-            iconPath: 'assets/images/Cart.svg',
-            title: 'Cart',
-            // hasBadge: true,
-            // badgeNumber: 3,
-          ),
-        ),
-        PersistentTabConfig(
-          screen: const ProfileScreen(),
-          item: _buildNavBarItem(
-            iconPath: 'assets/images/Profile.svg',
-            title: 'Profile',
-          ),
-        ),
-      ],
-      navBarBuilder: (navBarConfig) => Style8BottomNavBar(
-        navBarConfig: navBarConfig,
-        navBarDecoration: NavBarDecoration(
-          borderRadius: BorderRadius.circular(22.r),
-          boxShadow: [
-            BoxShadow(
-              blurRadius: 20.r,
-              color: Colors.black54,
-              offset: Offset(10.w, 10.h),
-            )
-          ],
-        ),
-        itemPadding: EdgeInsets.only(top: 10.h, bottom: 7.h),
-      ),
-    );
+    return StreamBuilder(
+        stream: FirebaseFirestore.instance
+            .collection('users')
+            .doc(FirebaseAuth.instance.currentUser!.uid)
+            .collection('cart')
+            .snapshots(),
+        builder: (context, snapshot) {
+          return PersistentTabView(
+            navBarOverlap: const NavBarOverlap.full(),
+            navBarHeight: 64.h,
+            margin: EdgeInsets.all(10.r),
+            tabs: [
+              PersistentTabConfig(
+                screen: const HomeScreen(),
+                item: _buildNavBarItem(
+                  iconPath: 'assets/images/Home.svg',
+                  title: "Home",
+                ),
+              ),
+              PersistentTabConfig(
+                screen: const CartView(),
+                item: _buildNavBarItem(
+                  iconPath: 'assets/images/Cart.svg',
+                  title: 'Cart',
+                  hasBadge: snapshot.hasData && snapshot.data!.docs.isNotEmpty,
+                  badgeNumber: snapshot.data?.docs.length,
+                ),
+              ),
+              PersistentTabConfig(
+                screen: const ProfileScreen(),
+                item: _buildNavBarItem(
+                  iconPath: 'assets/images/Profile.svg',
+                  title: 'Profile',
+                ),
+              ),
+            ],
+            navBarBuilder: (navBarConfig) => Style8BottomNavBar(
+              navBarConfig: navBarConfig,
+              navBarDecoration: NavBarDecoration(
+                borderRadius: BorderRadius.circular(22.r),
+                boxShadow: [
+                  BoxShadow(
+                    blurRadius: 20.r,
+                    color: Colors.black54,
+                    offset: Offset(10.w, 10.h),
+                  )
+                ],
+              ),
+              itemPadding: EdgeInsets.only(top: 10.h, bottom: 7.h),
+            ),
+          );
+        });
   }
 
   ItemConfig _buildNavBarItem({

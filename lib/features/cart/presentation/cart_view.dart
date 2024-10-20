@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -31,6 +33,7 @@ class CartView extends StatelessWidget {
               }
 
               var cartItemsDocs = snapshot.data!.docs;
+              log('cartItemsDocs: $cartItemsDocs');
 
               return FutureBuilder(
                 future: Future.wait(cartItemsDocs.map((e) async {
@@ -43,6 +46,7 @@ class CartView extends StatelessWidget {
                 }).toList()),
                 builder: (context, snapshot) {
                   final cartItems = snapshot.data?.cast<CartItem>() ?? [];
+                  log('cartItems: $cartItems');
                   final double subtotal = cartItems.fold(
                     0,
                     (previousValue, element) =>
