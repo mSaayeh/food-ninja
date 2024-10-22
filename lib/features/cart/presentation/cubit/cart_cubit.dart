@@ -7,6 +7,7 @@ part 'cart_state.dart';
 
 class CartCubit extends Cubit<CartState> {
   final CartService cartService;
+
   CartCubit(this.cartService) : super(const CartInitial());
 
   void increaseQuantity(CartItem cartItem) async {
@@ -24,6 +25,18 @@ class CartCubit extends Cubit<CartState> {
     } else {
       await cartService.addToCart(cartItem.meal.ref.path, -1);
     }
+    Future.delayed(const Duration(milliseconds: 500), () {
+      emit(const CartInitial());
+    });
+  }
+
+  Future<void> removeFromCart(CartItem cartItem) async {
+    await cartService.removeFromCart(cartItem.meal.id);
+  }
+
+  Future<void> addToCart(CartItem cartItem) async {
+    emit(const CartLoading());
+    await cartService.addToCart(cartItem.meal.ref.path, cartItem.quantity);
     Future.delayed(const Duration(milliseconds: 500), () {
       emit(const CartInitial());
     });
