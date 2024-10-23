@@ -11,6 +11,7 @@ dependencies:
   carousel_slider: ^5.0.0
   cloud_firestore: ^5.4.1
   connectivity_plus: ^6.0.5
+  country_picker: ^2.0.26
   cupertino_icons: ^1.0.8
   equatable: ^2.0.5
   firebase_auth: ^5.2.1
@@ -28,11 +29,12 @@ dependencies:
   go_router: ^14.2.7
   google_fonts: ^6.2.1
   google_sign_in: ^6.2.1
+  http: ^1.2.2
   persistent_bottom_nav_bar_v2: ^5.3.0
   shimmer: ^3.0.0
+  webview_flutter: ^4.10.0
 
 dev_dependencies:
-
   flutter_lints: ^4.0.0
   flutter_test:
     sdk: flutter
@@ -55,5 +57,5 @@ flutter:
           weight: 500
         - asset: assets/fonts/BentonSans Regular.otf
           weight: 400
-        - asset: assets/fonts/BentonSans Thin.otf  
+        - asset: assets/fonts/BentonSans Thin.otf
           weight: 200

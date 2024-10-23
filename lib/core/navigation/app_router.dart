@@ -3,6 +3,9 @@ import 'package:food_ninja/core/navigation/main_navigation_screen.dart';
 import 'package:food_ninja/features/auth/presentation/login/login_screen.dart';
 import 'package:food_ninja/features/auth/presentation/signup/sign_up_screen.dart';
 import 'package:food_ninja/features/auth/presentation/signup/sign_up_success_screen.dart';
+import 'package:food_ninja/features/checkout/presentation/address_details_screen.dart';
+import 'package:food_ninja/features/checkout/presentation/checkout_screen.dart';
+import 'package:food_ninja/features/checkout/presentation/payment_details_screen.dart';
 import 'package:food_ninja/features/home/data/models/restaurant.dart';
 import 'package:food_ninja/features/home/presentation/home_screen.dart';
 import 'package:food_ninja/features/onboarding/presentation/onboarding_screen.dart';
@@ -22,6 +25,9 @@ const popularRestaurats = 'popular_restaurants';
 const popularMeals = 'popular_meals';
 const mainNavigationScreen = '/main_nav';
 const restaurant = '/restaurant';
+const checkout = '/checkout';
+const addressDetails = '/address_details';
+const paymentDetails = '/payment_details';
 
 class AppRouter {
   const AppRouter._();
@@ -41,10 +47,34 @@ class AppRouter {
         builder: (context, state) => const MainNavigationScreen(),
       ),
       GoRoute(
+        name: checkout,
+        path: "/$checkout/:subtotal/:deliveryCharge/:discount/:totalPrice",
+        builder: (context, state) => CheckoutScreen(
+          subtotal: double.parse(state.pathParameters['subtotal']!),
+          deliveryCharge: double.parse(state.pathParameters['deliveryCharge']!),
+          discount: double.parse(state.pathParameters['discount']!),
+          totalPrice: double.parse(state.pathParameters['totalPrice']!),
+        ),
+      ),
+      GoRoute(
         path: restaurant,
         builder: (context, state) {
           final restaurant = state.extra as Restaurant;
           return RestaurantView(restaurant: restaurant);
+        },
+      ),
+      GoRoute(
+        name: paymentDetails,
+        path: "$paymentDetails/:paymentKey",
+        builder: (context, state) {
+          final paymentKey = state.pathParameters['paymentKey']!;
+          return PaymentDetailsScreen(paymentKey: paymentKey);
+        },
+      ),
+      GoRoute(
+        path: addressDetails,
+        builder: (context, state) {
+          return const AddressDetailsScreen();
         },
       ),
       GoRoute(

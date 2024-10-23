@@ -22,22 +22,22 @@ class PriceInfo extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Text(
+            Text(
               'Sub-Total',
               style: TextStyle(
                 color: Colors.white,
                 fontFamily: 'BentonSans',
                 fontWeight: FontWeight.w500,
-                fontSize: 19,
+                fontSize: 14.sp,
               ),
             ),
             Text(
               '${subtotal.toStringAsFixed(2)} \$',
-              style: const TextStyle(
+              style: TextStyle(
                 color: Colors.white,
                 fontFamily: 'BentonSans',
                 fontWeight: FontWeight.w500,
-                fontSize: 19,
+                fontSize: 14.sp,
               ),
             ),
           ],
@@ -45,21 +45,23 @@ class PriceInfo extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Text(
+            Text(
               'Delivery Charge',
               style: TextStyle(
-                  color: Colors.white,
-                  fontFamily: 'BentonSans',
-                  fontWeight: FontWeight.w500,
-                  fontSize: 19),
+                color: Colors.white,
+                fontFamily: 'BentonSans',
+                fontWeight: FontWeight.w500,
+                fontSize: 14.sp,
+              ),
             ),
             Text(
               '${deliveryCharge.toStringAsFixed(2)} \$',
-              style: const TextStyle(
-                  color: Colors.white,
-                  fontFamily: 'BentonSans',
-                  fontWeight: FontWeight.w500,
-                  fontSize: 19),
+              style: TextStyle(
+                color: Colors.white,
+                fontFamily: 'BentonSans',
+                fontWeight: FontWeight.w500,
+                fontSize: 14.sp,
+              ),
             ),
           ],
         ),
@@ -67,21 +69,23 @@ class PriceInfo extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
+              Text(
                 'Discount',
                 style: TextStyle(
-                    color: Colors.white,
-                    fontFamily: 'BentonSans',
-                    fontWeight: FontWeight.w500,
-                    fontSize: 19),
+                  color: Colors.white,
+                  fontFamily: 'BentonSans',
+                  fontWeight: FontWeight.w500,
+                  fontSize: 14.sp,
+                ),
               ),
               Text(
                 '${discount.toStringAsFixed(2)} \$',
-                style: const TextStyle(
-                    color: Colors.white,
-                    fontFamily: 'BentonSans',
-                    fontWeight: FontWeight.w500,
-                    fontSize: 19),
+                style: TextStyle(
+                  color: Colors.white,
+                  fontFamily: 'BentonSans',
+                  fontWeight: FontWeight.w500,
+                  fontSize: 14.sp,
+                ),
               ),
             ],
           ),
@@ -89,21 +93,21 @@ class PriceInfo extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Text(
+            Text(
               'Total',
               style: TextStyle(
                   color: Colors.white,
                   fontFamily: 'BentonSans',
                   fontWeight: FontWeight.w500,
-                  fontSize: 19),
+                  fontSize: 18.sp),
             ),
             Text(
               '${totalPrice.toStringAsFixed(2)} \$',
-              style: const TextStyle(
+              style: TextStyle(
                 color: Colors.white,
                 fontFamily: 'BentonSans',
                 fontWeight: FontWeight.w500,
-                fontSize: 19,
+                fontSize: 18.sp,
               ),
             ),
           ],

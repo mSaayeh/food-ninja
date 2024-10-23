@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:food_ninja/core/navigation/app_router.dart';
 import 'package:food_ninja/features/cart/data/models/cart_item.dart';
 import 'package:food_ninja/features/cart/presentation/cubit/cart_cubit.dart';
 import 'package:food_ninja/features/cart/presentation/widgets/custom_text.dart';
 import 'package:food_ninja/features/cart/presentation/widgets/order_list.dart';
 import 'package:food_ninja/features/cart/presentation/widgets/payment_card.dart';
+import 'package:go_router/go_router.dart';
 
 class CartViewBody extends StatelessWidget {
   final List<CartItem> cartItems;
@@ -70,6 +72,14 @@ class CartViewBody extends StatelessWidget {
           deliveryCharge: deliveryCharge,
           discount: discount,
           totalPrice: totalPrice,
+          onCheckout: () {
+            context.pushNamed(checkout, pathParameters: {
+              'subtotal': subtotal.toString(),
+              'deliveryCharge': deliveryCharge.toString(),
+              'discount': discount.toString(),
+              'totalPrice': totalPrice.toString(),
+            });
+          },
         ),
       ],
     );

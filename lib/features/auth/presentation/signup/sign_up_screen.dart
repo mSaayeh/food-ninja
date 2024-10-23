@@ -45,7 +45,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
           email: _email, password: _password);
       final user =
           AuthedUser(id: createdUser.user!.uid, name: _name, email: _email);
-      log(user.toString());
       await FirestoreAuthHelper.createNewUser(user);
       if (context.mounted) {
         context.pushReplacement(signupSuccess);
@@ -164,7 +163,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         TextButton(
                           onPressed: () {
                             context.go(login);
-                            log("login success");
                           },
                           child: const Text(
                             'already have an account?',

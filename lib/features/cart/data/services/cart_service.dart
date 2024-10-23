@@ -22,19 +22,21 @@ class CartServiceImpl implements CartService {
 
       DocumentReference cartItemRef = cartRef.doc(_getMealIdFromRef(mealRef));
 
-      await FirebaseFirestore.instance.runTransaction((transaction) async {
-        DocumentSnapshot snapshot = await transaction.get(cartItemRef);
+      await FirebaseFirestore.instance.runTransaction(
+        (transaction) async {
+          DocumentSnapshot snapshot = await transaction.get(cartItemRef);
 
-        if (!snapshot.exists) {
-          transaction.set(cartItemRef, {
-            'meal': _firestore.doc(mealRef),
-            'quantity': quantity,
-          });
-        } else {
-          int newQuantity = snapshot['quantity'] + quantity;
-          transaction.update(cartItemRef, {'quantity': newQuantity});
-        }
-      });
+          if (!snapshot.exists) {
+            transaction.set(cartItemRef, {
+              'meal': _firestore.doc(mealRef),
+              'quantity': quantity,
+            });
+          } else {
+            int newQuantity = snapshot['quantity'] + quantity;
+            transaction.update(cartItemRef, {'quantity': newQuantity});
+          }
+        },
+      );
     }
   }
 

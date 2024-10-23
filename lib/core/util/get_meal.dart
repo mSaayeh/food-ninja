@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:food_ninja/features/home/data/models/meal.dart';
@@ -9,7 +7,6 @@ Future<Meal> getMeal(DocumentSnapshot e) async {
   // final imageUrl =
   //     await FirebaseStorage.instance.ref(e['image_url']).getDownloadURL();
   final restaurantDoc = await e['restaurant'].get();
-  log('restaurantDoc: $restaurantDoc');
   final restaurantData = restaurantDoc.data()!;
   final restaurantImageUrl = await FirebaseStorage.instance
       .ref(restaurantData['image_url'])

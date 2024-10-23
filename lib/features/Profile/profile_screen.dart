@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:food_ninja/core/navigation/app_router.dart';
-import 'package:food_ninja/features/Profile/profile_cubit.dart';
+import 'package:food_ninja/features/Profile/cubit/profile_cubit.dart';
 import 'package:food_ninja/features/Profile/widgets/profile_list_tile.dart';
 import 'package:go_router/go_router.dart';
 
