@@ -78,7 +78,6 @@ class _LoginScreenState extends State<LoginScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(error.message ?? 'Google sign in failed')),
       );
-      log("Failed to signin ${error.message}");
     }
   }
 
@@ -87,7 +86,6 @@ class _LoginScreenState extends State<LoginScreen> {
       isLoading = true;
     });
     await loginWithGoogle();
-    log('Login Succeeded with user ${_firebaseAuth.currentUser}');
     if (context.mounted) {
       context.go(mainNavigationScreen);
     }
