@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:equatable/equatable.dart';
 
 class Address extends Equatable {
@@ -15,4 +16,22 @@ class Address extends Equatable {
 
   @override
   List<Object?> get props => [address, city, country, postalCode];
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'address': address,
+      'city': city,
+      'country': country,
+      'postalCode': postalCode,
+    };
+  }
+
+  factory Address.fromMap(Map<String, dynamic> map) {
+    return Address(
+      address: map['streetAddress'] as String,
+      city: map['city'] as String,
+      country: map['country'] as String,
+      postalCode: map['postalCode'] as String,
+    );
+  }
 }

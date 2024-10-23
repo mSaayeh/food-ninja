@@ -10,12 +10,17 @@ class PaymentCard extends StatelessWidget {
   final double deliveryCharge;
   final double discount;
   final double totalPrice;
+  final VoidCallback? onCheckout;
+  final bool isLoading;
+
   const PaymentCard({
     super.key,
     required this.subtotal,
     required this.deliveryCharge,
     required this.discount,
     required this.totalPrice,
+    required this.onCheckout,
+    this.isLoading = false,
   });
 
   @override
@@ -62,7 +67,10 @@ class PaymentCard extends StatelessWidget {
                   ),
                 ),
                 const Spacer(),
-                const PlaceOrderButton(),
+                PlaceOrderButton(
+                  onCheckout: onCheckout,
+                  isLoading: isLoading,
+                ),
               ],
             ),
           ),
