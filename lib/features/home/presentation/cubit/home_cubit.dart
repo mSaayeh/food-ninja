@@ -25,10 +25,10 @@ class HomeCubit extends Cubit<HomeState> {
     emit(state.copyWith(promotionsState: PromotionsLoaded(promotions)));
   }
 
-  Future<void> loadRestaurants() async {
+  Future<void> loadRestaurants([String? searchQuery]) async {
     emit(state.copyWith(restaurantsState: RestaurantsLoading()));
 
-    final restaurants = await restaurantsService.getRestaurants();
+    final restaurants = await restaurantsService.getRestaurants(searchQuery);
 
     emit(state.copyWith(restaurantsState: RestaurantsLoaded(restaurants)));
   }

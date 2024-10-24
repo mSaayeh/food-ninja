@@ -4,7 +4,7 @@ import 'package:food_ninja/core/util/get_meal.dart';
 import 'package:food_ninja/features/home/data/models/restaurant.dart';
 
 abstract class RestaurantsService {
-  Future<List<Restaurant>> getRestaurants();
+  Future<List<Restaurant>> getRestaurants([String? searchQuery]);
   Future<Restaurant> getRestaurantDetails(String ref);
 }
 
@@ -12,8 +12,13 @@ class RestaurantsServiceImpl implements RestaurantsService {
   final firestore = FirebaseFirestore.instance;
 
   @override
-  Future<List<Restaurant>> getRestaurants() async {
-    final restaurants = await firestore.collection('restaurants').get();
+  Future<List<Restaurant>> getRestaurants(
+      [String? searchQuery, int? limit]) async {
+    final restaurants = await firestore
+        .collection('restaurants')
+        .where('name', isGreaterThanOrEqualTo: searchQuery?.toLowerCase() ?? '')
+        .get();
+
     return Future.wait(restaurants.docs.map((e) async {
       final imageUrl =
           await FirebaseStorage.instance.ref(e['image_url']).getDownloadURL();
