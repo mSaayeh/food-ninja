@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:food_ninja/core/navigation/app_router.dart';
+import 'package:food_ninja/core/theme/theme.dart';
 import 'package:food_ninja/features/cart/data/models/cart_item.dart';
 import 'package:food_ninja/features/cart/presentation/cubit/cart_cubit.dart';
 import 'package:food_ninja/features/cart/presentation/widgets/custom_text.dart';
@@ -35,10 +36,22 @@ class CartViewBody extends StatelessWidget {
     ScaffoldMessenger.of(context).clearSnackBars();
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: const Text('Item deleted!'),
+        content: const Text(
+          'Item deleted!',
+          style: TextStyle(color: Colors.black),
+        ),
         duration: const Duration(seconds: 3),
+        backgroundColor: Colors.white,
+        margin: EdgeInsets.symmetric(horizontal: 12.w),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.r),
+          side: BorderSide.none,
+        ),
+        elevation: 10,
+        behavior: SnackBarBehavior.floating,
         action: SnackBarAction(
           label: 'Undo',
+          textColor: gradientDarkGreen,
           onPressed: () {
             context.read<CartCubit>().addToCart(cartItem);
           },
@@ -62,25 +75,31 @@ class CartViewBody extends StatelessWidget {
         ),
         SizedBox(height: 20.h),
         Expanded(
-          child: OrderList(
-            cartItems: cartItems,
-            onRemoved: (cartItem) => removeFromCart(context, cartItem),
-          ),
+          child: cartItems.isEmpty
+              ? const Center(
+                  child: Text('Your cart is empty.'),
+                )
+              : OrderList(
+                  cartItems: cartItems,
+                  onRemoved: (cartItem) => removeFromCart(context, cartItem),
+                ),
         ),
-        PaymentCard(
-          subtotal: subtotal,
-          deliveryCharge: deliveryCharge,
-          discount: discount,
-          totalPrice: totalPrice,
-          onCheckout: () {
-            context.pushNamed(checkout, pathParameters: {
-              'subtotal': subtotal.toString(),
-              'deliveryCharge': deliveryCharge.toString(),
-              'discount': discount.toString(),
-              'totalPrice': totalPrice.toString(),
-            });
-          },
-        ),
+        cartItems.isEmpty
+            ? const SizedBox()
+            : PaymentCard(
+                subtotal: subtotal,
+                deliveryCharge: deliveryCharge,
+                discount: discount,
+                totalPrice: totalPrice,
+                onCheckout: () {
+                  context.pushNamed(checkout, pathParameters: {
+                    'subtotal': subtotal.toString(),
+                    'deliveryCharge': deliveryCharge.toString(),
+                    'discount': discount.toString(),
+                    'totalPrice': totalPrice.toString(),
+                  });
+                },
+              ),
       ],
     );
   }
