@@ -22,50 +22,53 @@ class PopularRestaurantsScreen extends StatelessWidget {
           child: SafeArea(
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 25.0.w),
-              child: Column(
-                children: [
-                  const HomeHeader(
-                    hasBackButton: true,
-                  ),
-                  BlocBuilder<HomeCubit, HomeState>(
-                    builder: (context, state) {
-                      return HomeSection(
-                        title: 'Popular Restaurants',
-                        heroTag: 'rest_title',
-                        child: GridView.builder(
-                          scrollDirection: Axis.vertical,
-                          physics: const ClampingScrollPhysics(),
-                          shrinkWrap: true,
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 2),
-                          itemBuilder: (context, index) {
-                            if (state.restaurantsState is RestaurantsLoaded) {
-                              final rest =
-                                  (state.restaurantsState as RestaurantsLoaded)
-                                      .restaurants[index];
-                              return CardListTile.restaurant(
-                                restaurant: rest,
-                                onClick: () {
-                                  {
-                                    context.push(restaurant, extra: rest);
-                                  }
-                                },
-                              );
-                            } else {
-                              return const CardListTile.loading();
-                            }
-                          },
-                          itemCount: state.restaurantsState is RestaurantsLoaded
-                              ? (state.restaurantsState as RestaurantsLoaded)
-                                  .restaurants
-                                  .length
-                              : 4,
-                        ),
-                      );
-                    },
-                  ),
-                ],
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    const HomeHeader(
+                      hasBackButton: true,
+                    ),
+                    BlocBuilder<HomeCubit, HomeState>(
+                      builder: (context, state) {
+                        return HomeSection(
+                          title: 'Popular Restaurants',
+                          heroTag: 'rest_title',
+                          child: GridView.builder(
+                            scrollDirection: Axis.vertical,
+                            physics: const ClampingScrollPhysics(),
+                            shrinkWrap: true,
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 2),
+                            itemBuilder: (context, index) {
+                              if (state.restaurantsState is RestaurantsLoaded) {
+                                final rest = (state.restaurantsState
+                                        as RestaurantsLoaded)
+                                    .restaurants[index];
+                                return CardListTile.restaurant(
+                                  restaurant: rest,
+                                  onClick: () {
+                                    {
+                                      context.push(restaurant, extra: rest);
+                                    }
+                                  },
+                                );
+                              } else {
+                                return const CardListTile.loading();
+                              }
+                            },
+                            itemCount: state.restaurantsState
+                                    is RestaurantsLoaded
+                                ? (state.restaurantsState as RestaurantsLoaded)
+                                    .restaurants
+                                    .length
+                                : 4,
+                          ),
+                        );
+                      },
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

@@ -13,9 +13,8 @@ class RestaurantDetailsCubit extends Cubit<RestaurantDetailsState> {
   void loadRestaurantDetails(String restaurantRef) async {
     emit(RestaurantDetailsLoading());
     try {
-      final restaurant = await _restaurantsService
-          .getRestaurantDetails(restaurantRef)
-          .timeout(const Duration(seconds: 7));
+      final restaurant =
+          await _restaurantsService.getRestaurantDetails(restaurantRef);
       emit(RestaurantDetailsLoaded(restaurant: restaurant));
     } catch (e) {
       emit(const RestaurantDetailsError(

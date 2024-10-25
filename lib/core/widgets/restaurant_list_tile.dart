@@ -58,6 +58,9 @@ class CardListTile extends StatelessWidget {
                     Text(
                       restaurant?.name.capitalize() ?? meal!.name.capitalize(),
                       style: Theme.of(context).textTheme.bodyLarge,
+                      textAlign: TextAlign.center,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                     ),
                     SizedBox(height: 4.h),
                     restaurant != null

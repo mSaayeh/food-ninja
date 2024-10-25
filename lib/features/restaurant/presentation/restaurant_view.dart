@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:food_ninja/core/theme/theme.dart';
+import 'package:food_ninja/core/util/extensions.dart';
 import 'package:food_ninja/core/widgets/double_fall_back_image.dart';
 import 'package:food_ninja/core/widgets/meals_list/meals_list.dart';
 import 'package:food_ninja/di/app_module.dart';
@@ -71,7 +72,7 @@ class _RestaurantViewState extends State<RestaurantView> {
                                 children: [
                                   SizedBox(height: 50.h),
                                   Text(
-                                    rest.name,
+                                    rest.name.capitalize(),
                                     style: TextStyle(
                                       fontFamily: 'BentonSans',
                                       fontWeight: FontWeight.w500,
@@ -94,7 +95,10 @@ class _RestaurantViewState extends State<RestaurantView> {
                                       ? const SizedBox()
                                       : Text.rich(
                                           TextSpan(
-                                              text: isExpanded
+                                              text: isExpanded ||
+                                                      rest.description!
+                                                              .length <=
+                                                          150
                                                   ? rest.description!
                                                   : "${rest.description!.substring(0, 150)}...",
                                               style: TextStyle(
@@ -104,23 +108,26 @@ class _RestaurantViewState extends State<RestaurantView> {
                                                 height: 1.5,
                                               ),
                                               children: [
-                                                TextSpan(
-                                                  text: isExpanded
-                                                      ? " Show less"
-                                                      : " Show more",
-                                                  style: const TextStyle(
-                                                    color: gradientDarkGreen,
-                                                    fontWeight: FontWeight.w500,
+                                                if (rest.description!.length >
+                                                    150)
+                                                  TextSpan(
+                                                    text: isExpanded
+                                                        ? " Show less"
+                                                        : " Show more",
+                                                    style: const TextStyle(
+                                                      color: gradientDarkGreen,
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                    ),
+                                                    recognizer:
+                                                        TapGestureRecognizer()
+                                                          ..onTap = () {
+                                                            setState(() {
+                                                              isExpanded =
+                                                                  !isExpanded;
+                                                            });
+                                                          },
                                                   ),
-                                                  recognizer:
-                                                      TapGestureRecognizer()
-                                                        ..onTap = () {
-                                                          setState(() {
-                                                            isExpanded =
-                                                                !isExpanded;
-                                                          });
-                                                        },
-                                                ),
                                               ]),
                                         ),
                                   rest.meals == null

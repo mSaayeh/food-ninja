@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:food_ninja/features/home/data/models/meal.dart';
@@ -24,18 +26,37 @@ Future<Meal> getMeal(DocumentSnapshot<Map<String, dynamic>> e) async {
   final restaurant = Restaurant(
     imageUrl: restaurantImageUrl,
     name: restaurantData['name'] ?? 'Unknown Restaurant',
+    description: restaurantData['description'] ?? 'No description',
+    detailsImageUrl: restaurantData['details_image_url'] ?? '',
     rating: restaurantData['rating'] ?? 0.0,
     ref: '/${restaurantDoc.reference.path}',
   );
 
-  return Meal(
-    id: e.id,
-    imageUrl: '',
-    name: e.data()?['name'] ?? 'Unnamed Meal',
-    rating: e.data()?['rating'] ?? 0.0,
-    description: e.data()?['description'] ?? 'No description',
-    restaurant: restaurant,
-    price: e.data()?['price'] ?? 0.0,
-    ref: e.reference,
-  );
+  late Meal meal;
+
+  try {
+    final imageUrl = e.data()?['image_url'] ?? '';
+    late String mealImageUrl;
+    if (imageUrl.isNotEmpty) {
+      mealImageUrl =
+          await FirebaseStorage.instance.ref(imageUrl!).getDownloadURL();
+    } else {
+      mealImageUrl = '';
+    }
+
+    meal = Meal(
+      id: e.id,
+      imageUrl: mealImageUrl,
+      name: e.data()?['name'] ?? 'Unnamed Meal',
+      rating: e.data()?['rating'] ?? 0.0,
+      description: e.data()?['description'] ?? 'No description',
+      restaurant: restaurant,
+      price: double.parse("${e.data()?['price'] ?? 0}"),
+      ref: e.reference,
+    );
+  } catch (error) {
+    log('Error creating meal from document ${e.id}', error: error);
+  }
+
+  return meal;
 }
