@@ -7,13 +7,17 @@ abstract class MenuService {
 }
 
 class MenuServiceImpl implements MenuService {
-  final firestore = FirebaseFirestore.instance;
+  final FirebaseFirestore firestore;
+
+  MenuServiceImpl({required this.firestore});
 
   @override
   Future<List<Meal>> getPopularMeals() async {
     final popularMeals = await firestore.collection('popular_meals').get();
+
     return Future.wait(popularMeals.docs.map((e) async {
-      final doc = await e['ref'].get();
+      final DocumentReference<Map<String, dynamic>> docRef = e['ref'];
+      final doc = await docRef.get();
       return getMeal(doc);
     }).toList());
   }
