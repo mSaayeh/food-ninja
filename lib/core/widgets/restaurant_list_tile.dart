@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:food_ninja/core/util/extensions.dart';
 import 'package:food_ninja/core/widgets/double_fall_back_image.dart';
 import 'package:food_ninja/features/home/data/models/meal.dart';
 import 'package:food_ninja/features/home/data/models/restaurant.dart';
@@ -55,7 +56,7 @@ class CardListTile extends StatelessWidget {
                     ),
                     SizedBox(height: 16.h),
                     Text(
-                      restaurant?.name ?? meal!.name,
+                      restaurant?.name.capitalize() ?? meal!.name.capitalize(),
                       style: Theme.of(context).textTheme.bodyLarge,
                     ),
                     SizedBox(height: 4.h),

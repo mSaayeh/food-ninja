@@ -1,9 +1,12 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:food_ninja/core/theme/theme.dart';
 import 'package:food_ninja/core/widgets/double_fall_back_image.dart';
 import 'package:food_ninja/core/widgets/meals_list/meals_list.dart';
 import 'package:food_ninja/di/app_module.dart';
+import 'package:food_ninja/features/cart/presentation/widgets/custom_back_button.dart';
 import 'package:food_ninja/features/home/data/models/restaurant.dart';
 import 'package:food_ninja/features/restaurant/cubit/restaurant_details_cubit.dart';
 import 'package:food_ninja/features/restaurant/presentation/rating_indicator_with_number.dart';
@@ -19,6 +22,7 @@ class RestaurantView extends StatefulWidget {
 class _RestaurantViewState extends State<RestaurantView> {
   double sheetPosition = 0.6;
   final double dragSensitivity = 600;
+  bool isExpanded = false;
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +52,7 @@ class _RestaurantViewState extends State<RestaurantView> {
                     child: DraggableScrollableSheet(
                       snap: true,
                       initialChildSize: sheetPosition,
-                      minChildSize: 0.55,
+                      minChildSize: sheetPosition,
                       maxChildSize: 0.95,
                       builder: (context, scrollController) {
                         return Container(
@@ -88,17 +92,36 @@ class _RestaurantViewState extends State<RestaurantView> {
                                   ),
                                   rest.description == null
                                       ? const SizedBox()
-                                      : Text(
-                                          rest.description!,
-                                          maxLines: 4,
-                                          style: TextStyle(
-                                            fontFamily: 'BentonSans',
-                                            fontWeight: FontWeight.w300,
-                                            fontSize: 12.sp,
-                                            height: 1.5,
-                                          ),
-                                          textAlign: TextAlign.start,
-                                          softWrap: true,
+                                      : Text.rich(
+                                          TextSpan(
+                                              text: isExpanded
+                                                  ? rest.description!
+                                                  : "${rest.description!.substring(0, 150)}...",
+                                              style: TextStyle(
+                                                fontFamily: 'BentonSans',
+                                                fontWeight: FontWeight.w300,
+                                                fontSize: 12.sp,
+                                                height: 1.5,
+                                              ),
+                                              children: [
+                                                TextSpan(
+                                                  text: isExpanded
+                                                      ? " Show less"
+                                                      : " Show more",
+                                                  style: const TextStyle(
+                                                    color: gradientDarkGreen,
+                                                    fontWeight: FontWeight.w500,
+                                                  ),
+                                                  recognizer:
+                                                      TapGestureRecognizer()
+                                                        ..onTap = () {
+                                                          setState(() {
+                                                            isExpanded =
+                                                                !isExpanded;
+                                                          });
+                                                        },
+                                                ),
+                                              ]),
                                         ),
                                   rest.meals == null
                                       ? const SizedBox()
@@ -142,6 +165,11 @@ class _RestaurantViewState extends State<RestaurantView> {
                         );
                       },
                     ),
+                  ),
+                  Positioned(
+                    top: 40.h,
+                    left: 16.w,
+                    child: const CustomBackButton(),
                   ),
                 ],
               );
