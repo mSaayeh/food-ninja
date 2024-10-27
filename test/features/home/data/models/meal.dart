@@ -1,8 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:food_ninja/features/home/data/models/meal.dart';
 import 'package:food_ninja/features/home/data/models/restaurant.dart';
+import 'package:mockito/mockito.dart';
 
-import '../../../../mocks.mocks.dart';
+class MockDocumentReference extends Mock implements DocumentReference {}
 
 void main() {
   final mockDocumentRef = MockDocumentReference();
