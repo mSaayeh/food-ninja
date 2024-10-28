@@ -71,6 +71,13 @@ class ProfileScreen extends StatelessWidget {
                         child: Column(
                           children: [
                             ProfileListTile(
+                              leading: const Icon(Icons.password),
+                              title: 'Change Password',
+                              onTab: () {
+                                context.push(changePassword);
+                              },
+                            ),
+                            ProfileListTile(
                               leading: const Icon(Icons.logout),
                               title: 'Log out',
                               onTab: () {

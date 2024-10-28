@@ -3,6 +3,7 @@ import 'package:food_ninja/core/navigation/main_navigation_screen.dart';
 import 'package:food_ninja/features/auth/presentation/login/login_screen.dart';
 import 'package:food_ninja/features/auth/presentation/signup/sign_up_screen.dart';
 import 'package:food_ninja/features/auth/presentation/signup/sign_up_success_screen.dart';
+import 'package:food_ninja/features/change_password/presentation/change_password_screen.dart';
 import 'package:food_ninja/features/checkout/presentation/address_details_screen.dart';
 import 'package:food_ninja/features/checkout/presentation/checkout_screen.dart';
 import 'package:food_ninja/features/checkout/presentation/payment_details_screen.dart';
@@ -28,6 +29,7 @@ const restaurant = '/restaurant';
 const checkout = '/checkout';
 const addressDetails = '/address_details';
 const paymentDetails = '/payment_details';
+const changePassword = '/change_password';
 
 class AppRouter {
   const AppRouter._();
@@ -62,6 +64,10 @@ class AppRouter {
           final restaurant = state.extra as Restaurant;
           return RestaurantView(restaurant: restaurant);
         },
+      ),
+      GoRoute(
+        path: changePassword,
+        builder: (context, state) => const ChangePasswordScreen(),
       ),
       GoRoute(
         name: paymentDetails,

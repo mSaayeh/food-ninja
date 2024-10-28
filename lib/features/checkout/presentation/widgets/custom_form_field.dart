@@ -7,6 +7,8 @@ class CustomFormField extends StatelessWidget {
   final TextEditingController controller;
   final bool enabled;
   final IconData? trailingIcon;
+  final FormFieldValidator<String?>? validator;
+  final bool obscureText;
 
   const CustomFormField({
     super.key,
@@ -14,6 +16,8 @@ class CustomFormField extends StatelessWidget {
     required this.controller,
     this.trailingIcon,
     this.enabled = true,
+    this.validator,
+    this.obscureText = false,
   });
 
   @override
@@ -73,7 +77,9 @@ class CustomFormField extends StatelessWidget {
           ),
         ),
       ),
-      validator: (value) => value!.isEmpty ? 'Please enter $label' : null,
+      validator:
+          validator ?? (value) => value!.isEmpty ? 'Please enter $label' : null,
+      obscureText: obscureText,
     );
   }
 }
